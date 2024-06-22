@@ -1,0 +1,18 @@
+version: '3'
+services:
+  mysql:
+    image: mysql
+    ports:
+      - 3306:3306
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=qwer1595@!
+      - MYSQL_DATABASE=pup
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=qwer1595@!
+      - TZ=Asia/Seoul
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
