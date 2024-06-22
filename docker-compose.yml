@@ -1,6 +1,6 @@
 version: '3'
 services:
-  mysql:
+  db:
     image: mysql
     ports:
       - 3306:3306
@@ -11,8 +11,40 @@ services:
       - MYSQL_USER=admin
       - MYSQL_PASSWORD=qwer1595@!
       - TZ=Asia/Seoul
+    networks:
+        - pup-networks
     volumes:
       - mysql_data:/var/lib/mysql
 
+  minio:
+    image: minio/minio
+    command: server /data --console-address ":9001"
+    container_name: minio
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    environment:
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: qwer1595@!
+    restart: always
+    shm_size: '1gb'
+    networks:
+      - pup-networks
+    volumes:
+      - ./data:/data
+  auth:
+    build:
+      context: .
+    ports:
+      - 8080:8080
+    networks:
+      - pup-networks
+    depends_on:
+      - db
+
 volumes:
   mysql_data:
+
+networks:
+  pup-networks:
+    driver: bridges
