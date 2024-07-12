@@ -14,7 +14,7 @@ COPY --from=builder /app/build/libs/pup-application-0.0.1-SNAPSHOT.jar app.jar
 
 EXPOSE 8080
 
-ENV SPRING_PROFILES_ACTIVE=prod
+ENV SPRING_PROFILES_ACTIVE=dev
 ENV TZ=Asia/Seoul
 ENV JAVA_OPTS="-Dspring.profiles.active=${SPRING_PROFILES_ACTIVE} -Dfile.encoding=UTF-8"
 
