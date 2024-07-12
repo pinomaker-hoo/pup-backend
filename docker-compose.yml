@@ -32,7 +32,7 @@ services:
       - pup-networks
     volumes:
       - ./data:/data
-  auth:
+  pup:
     build:
       context: .
     ports:
