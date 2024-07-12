@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  labels:
+    app: pup-backend
+  name: pup-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pup-backend
+  template:
+    metadata:
+      labels:
+        app: pup-backend
+    spec:
+      containers:
+        - name: pup-backend
+          image: pinomaker/pup-backend:latest
+          ports:
+            - containerPort: 8080
