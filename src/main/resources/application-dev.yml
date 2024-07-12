@@ -1,5 +1,5 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/pup
-    username: admin
+    url: jdbc:mysql://cloud.aiaracorp.com:3315/pup
+    username: root
     password: qwer1595@!
