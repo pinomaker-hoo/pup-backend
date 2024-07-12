@@ -19,7 +19,7 @@ logging:
 
 jwt:
   header: Authorization
-  secret: UGF5aGVyZSBCYWNrZW5kIEVuZ2luZWVyIFRlc3QgQ2FmZSBQcm9kdWN0IE1hbmFnZSBTZXJ2ZXIgQXBwbGljYXRpb24gdXNpbmcgU3ByaW5nIGJvb3QgTXlTUUwgSlBBIExvbWJvaw==
+  secret: UFVQIEJhY2tlbmQgQXBwbGljYXRpb24gUGV0IFdhbGtpbmcgU2VydmljZSB1c2luZyBTcHJpbmcgYm9vdCBNeVNRTCBKUEEgTG9tYm9r
   token-validity-in-seconds: 86400
   private-key: |
     -----BEGIN PRIVATE KEY-----
