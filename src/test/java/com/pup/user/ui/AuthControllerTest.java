@@ -24,7 +24,7 @@ import com.pup.api.user.event.dto.RequestUserLoginDto;
 import com.pup.api.user.event.dto.RequestUserSaveDto;
 import com.pup.api.user.event.vo.LoginUser;
 import com.pup.api.user.repository.UserJpaRepository;
-import com.pup.api.user.service.UserServiceImpl;
+import com.pup.api.user.service.UserService;
 import com.pup.api.user.ui.AuthController;
 import com.pup.global.enums.UserRole;
 import com.pup.global.jwt.JwtTokenProvider;
@@ -47,7 +47,7 @@ public class AuthControllerTest {
     private AuthController authController;
 
     @Mock
-    private UserServiceImpl userService;
+    private UserService userService;
     @Mock
     private UserJpaRepository userJpaRepository;
     @Mock

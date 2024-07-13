@@ -10,29 +10,19 @@ import com.pup.api.user.event.vo.LoginUser;
 public class UserJpaCustomRepositoryImpl implements UserJpaCustomRepository {
     private final JPAQueryFactory queryFactory;
 
-    /**
-     * username 기반 데이터 존재 여부 조회
-     * @param username
-     * @return
-     */
     @Override
-    public boolean existByUsername(String username) {
+    public boolean existedUserByEmail(String email) {
         QUser u = QUser.user;
 
         Integer fetchOne = queryFactory
                 .selectOne()
                 .from(u)
-                .where(u.username.eq(username))
+                .where(u.email.eq(email))
                 .fetchFirst();
 
         return fetchOne != null;
     }
 
-    /**
-     * username 기반 user 조회
-     * @param username
-     * @return
-     */
     @Override
     public LoginUser findUserByUsername(String username) {
         QUser u = QUser.user;
@@ -40,11 +30,11 @@ public class UserJpaCustomRepositoryImpl implements UserJpaCustomRepository {
         return queryFactory.select(
                         Projections.constructor(
                                 LoginUser.class,
-                                u.id,
-                                u.username,
+                                u.userId,
+                                u.nickname,
                                 u.password
                         )
                 ).from(u)
-                .where(u.username.eq(username)).fetchOne();
+                .where(u.nickname.eq(username)).fetchOne();
     }
 }

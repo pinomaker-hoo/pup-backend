@@ -4,7 +4,7 @@ public class SwaggerExampleValue {
     public static final String INTERNAL_SERVER_ERROR_RESPONSE = "{\"code\":401,\"status\":\"INTERNAL_SERVER\",\"message\":\"서버에서 오류가 발생했습니다.\"}";
     public static final String UN_AUTHENTICATION_RESPONSE =  "{\"code\":401,\"status\":\"UNAUTHORIZED\",\"message\":\"만료된 JWT 토큰입니다.\"}";
 
-    // ** POST : /api/v1/user
+    // ** POST : /api/v1/auth
     public static final String USER_SAVE_RESPONSE = "{\"code\":200,\"status\":\"OK\",\"message\":\"회원가입에 성공하였습니다.\"}";
     public static final String USER_SAVE_EXISTED_NUMBER_RESPONSE = "{\"code\":400,\"status\":\"BAD_REQUEST\",\"message\":\"이미 사용 중인 아이디 입니다.\"}";
 

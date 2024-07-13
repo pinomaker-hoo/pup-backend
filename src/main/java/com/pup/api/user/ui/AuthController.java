@@ -1,9 +1,11 @@
 package com.pup.api.user.ui;
 
+import com.pup.api.user.domain.User;
 import com.pup.api.user.event.dto.RequestTokenReissueDto;
 import com.pup.api.user.event.dto.RequestUserLoginDto;
 import com.pup.api.user.event.dto.RequestUserSaveDto;
 import com.pup.api.user.service.UserService;
+import com.pup.global.dto.CommonResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -13,6 +15,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,14 +31,17 @@ import com.pup.global.dto.SwaggerExampleValue;
 public class AuthController {
     private final UserService userService;
 
-    @Operation(summary = "Save User", description = "회원가입, 아이디와 비밀번호를 받아 유효성 및 중복 검사 후 유저를 저장합니다.")
+    @Operation(summary = "PUP 유저 생성", description = "PUP 유저를 생성합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "회원가입에 성공하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.USER_SAVE_RESPONSE))),
-            @ApiResponse(responseCode = "400", description = "이미 사용 중인 아이디 입니다.", content = @Content(mediaType = "application/json", examples = {@ExampleObject(value = SwaggerExampleValue.USER_SAVE_EXISTED_NUMBER_RESPONSE)})),
+            @ApiResponse(responseCode = "400", description = "이미 사용 중인 이메일 입니다.", content = @Content(mediaType = "application/json", examples = {@ExampleObject(value = SwaggerExampleValue.USER_SAVE_EXISTED_NUMBER_RESPONSE)})),
             @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
     @PostMapping
     public ResponseEntity<?> saveUser(@Valid @RequestBody RequestUserSaveDto dto) {
-        return userService.saveUser(dto);
+        userService.existedUserByEmail(dto.getEmail());
+        userService.saveUser(dto);
+
+        return CommonResponse.createResponseMessage(HttpStatus.OK.value(), "회원가입에 성공하였습니다.");
     }
 
     @Operation(summary = "Login", description = "로그인, 아이디와 비밀번호를 받아 유효성 및 유저 조회, 비밀번호 검증 후 토큰을 발급합니다.")
@@ -46,7 +52,8 @@ public class AuthController {
             @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@Valid @RequestBody RequestUserLoginDto dto) {
-        return userService.loginUser(dto);
+//        return userService.loginUser(dto);
+        return null;
     }
 
     @Operation(summary = "Reissue Token", description = "토큰 재발급, refresh token 유효성 검사 후 토큰을 재발급 합니다.")
@@ -55,6 +62,7 @@ public class AuthController {
             @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
     @PostMapping("/reissue")
     public ResponseEntity<?> reissueToken(@Valid @RequestBody RequestTokenReissueDto dto) {
-        return userService.reissueToken(dto);
+//        return userService.reissueToken(dto);
+        return null;
     }
 }
