@@ -1,8 +1,14 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/pup
-    username: root
+    url: jdbc:postgresql://cloud.aiaracorp.com:5432/pup
+    username: admin
     password: qwer1595@!
+    flyway:
+      url: jdbc:postgresql://cloud.aiaracorp.com:5432/pup
+      username: admin
+      password: qwer1595@!
+  flyway:
+    enabled: false
   jpa:
     show-sql: true
   properties:

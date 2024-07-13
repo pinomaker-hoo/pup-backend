@@ -51,7 +51,11 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
 
     // ** MySQL DB
-    runtimeOnly 'com.mysql:mysql-connector-j'
+    runtimeOnly 'org.postgresql:postgresql'
+
+    // ** Flyway
+    implementation 'org.flywaydb:flyway-core'
+    implementation "org.flywaydb:flyway-mysql"
 
     // ** Querydsl
     implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
