@@ -8,10 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import com.pup.global.dto.UserDetailDto;
-import com.pup.global.enums.UserRole;
 import com.pup.global.exception.UnAuthenticationException;
-
-import java.util.UUID;
 
 
 /**

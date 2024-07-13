@@ -1,11 +1,8 @@
 package com.pup.user.ui;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -13,31 +10,15 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
-import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import com.pup.api.user.event.dto.RequestTokenReissueDto;
-import com.pup.api.user.event.dto.RequestUserLoginDto;
-import com.pup.api.user.event.dto.RequestUserSaveDto;
-import com.pup.api.user.event.vo.LoginUser;
 import com.pup.api.user.repository.UserJpaRepository;
 import com.pup.api.user.service.UserService;
 import com.pup.api.user.ui.AuthController;
-import com.pup.global.enums.UserRole;
 import com.pup.global.jwt.JwtTokenProvider;
 import com.pup.global.jwt.JwtTokenValidator;
 import com.pup.global.utils.EncryptionUtils;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)

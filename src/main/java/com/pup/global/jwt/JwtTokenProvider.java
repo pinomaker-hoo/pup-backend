@@ -1,6 +1,5 @@
 package com.pup.global.jwt;
 
-import com.pup.global.enums.UserRole;
 import com.pup.global.utils.EncryptionUtils;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -14,7 +13,6 @@ import java.security.PrivateKey;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 @Slf4j
 @Component

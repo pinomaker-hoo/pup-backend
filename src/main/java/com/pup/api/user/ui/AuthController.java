@@ -1,6 +1,5 @@
 package com.pup.api.user.ui;
 
-import com.pup.api.user.domain.User;
 import com.pup.api.user.event.dto.RequestTokenReissueDto;
 import com.pup.api.user.event.dto.RequestUserLoginDto;
 import com.pup.api.user.event.dto.RequestUserSaveDto;

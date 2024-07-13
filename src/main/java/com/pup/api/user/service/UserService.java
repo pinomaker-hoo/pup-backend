@@ -1,30 +1,18 @@
 package com.pup.api.user.service;
 
 import com.pup.api.user.domain.User;
-import com.pup.api.user.domain.UserSocialTypeEnum;
-import com.pup.api.user.event.dto.RequestUserLoginDto;
 import com.pup.api.user.repository.UserJpaRepository;
-import com.pup.global.enums.OpenRangeEnum;
-import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.pup.api.user.event.dto.RequestTokenReissueDto;
 import com.pup.api.user.event.dto.RequestUserSaveDto;
 import com.pup.api.user.event.vo.LoginUser;
-import com.pup.global.dto.CommonResponse;
-import com.pup.global.dto.TokenDto;
-import com.pup.global.enums.UserRole;
 import com.pup.global.exception.BadRequestException;
 import com.pup.global.exception.NotFoundException;
 import com.pup.global.jwt.JwtTokenProvider;
 import com.pup.global.jwt.JwtTokenValidator;
 import com.pup.global.utils.EncryptionUtils;
-
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Slf4j
