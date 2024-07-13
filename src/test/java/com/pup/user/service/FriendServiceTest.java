@@ -38,7 +38,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 @DisplayName("User test")
-public class DogServiceTest {
+public class FriendServiceTest {
     @InjectMocks
     private UserService userService;
 

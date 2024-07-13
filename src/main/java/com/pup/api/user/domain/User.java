@@ -1,6 +1,7 @@
 package com.pup.api.user.domain;
 
 import com.pup.api.dog.domain.Dog;
+import com.pup.api.friend.domain.Friend;
 import com.pup.global.enums.OpenRangeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -70,4 +71,7 @@ public class User extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Dog> dogList;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Friend> friendList;
 }
