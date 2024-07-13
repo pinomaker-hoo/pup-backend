@@ -10,13 +10,12 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class RequestUserLoginDto {
-    @Schema(example = "admin")
+    @Schema(example = "test@test.com")
     @Size(max = 30, message = "30자 이내로 입력하세요.")
     @NotNull
-    private String username;
+    private String email;
 
-    @Schema(example = "qwer1595")
-    @Size(min = 8, max = 12, message = "8자에서 12자 이내로 입력하세요.")
+    @Schema(example = "1234")
     @NotNull
     private String password;
 }

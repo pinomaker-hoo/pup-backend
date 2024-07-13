@@ -8,14 +8,10 @@ import java.util.UUID;
 
 @Getter
 @AllArgsConstructor
-public class LoginUser {
+public class LoginResponse {
     private Integer userId;
     private String email;
-    private String password;
     private String nickname;
     private UUID userUid;
-
-    public LoginResponse toResponse(TokenDto token) {
-        return new LoginResponse(userId, email, nickname, userUid, token);
-    }
+    private TokenDto token;
 }

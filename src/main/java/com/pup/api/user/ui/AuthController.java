@@ -4,8 +4,12 @@ import com.pup.api.user.domain.User;
 import com.pup.api.user.event.dto.RequestTokenReissueDto;
 import com.pup.api.user.event.dto.RequestUserLoginDto;
 import com.pup.api.user.event.dto.RequestUserSaveDto;
+import com.pup.api.user.event.vo.LoginResponse;
+import com.pup.api.user.event.vo.LoginUser;
+import com.pup.api.user.service.AuthService;
 import com.pup.api.user.service.UserService;
 import com.pup.global.dto.CommonResponse;
+import com.pup.global.dto.TokenDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -30,6 +34,7 @@ import com.pup.global.dto.SwaggerExampleValue;
 @Slf4j
 public class AuthController {
     private final UserService userService;
+    private final AuthService authService;
 
     @Operation(summary = "PUP 유저 생성", description = "PUP 유저를 생성합니다.")
     @ApiResponses(value = {
@@ -44,7 +49,7 @@ public class AuthController {
         return CommonResponse.createResponseMessage(HttpStatus.OK.value(), "회원가입에 성공하였습니다.");
     }
 
-    @Operation(summary = "Login", description = "로그인, 아이디와 비밀번호를 받아 유효성 및 유저 조회, 비밀번호 검증 후 토큰을 발급합니다.")
+    @Operation(summary = "PUP 유저 로그인", description = "로그인, 아이디와 비밀번호를 받아 유효성 및 유저 조회, 비밀번호 검증 후 토큰을 발급합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "로그인에 성공했습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.USER_LOGIN_RESPONSE))),
             @ApiResponse(responseCode = "400", description = "비밀번호가 같지 않습니다.", content = @Content(mediaType = "application/json", examples = {@ExampleObject(value = SwaggerExampleValue.USER_LOGIN_NOT_MATCH_PASSWORD_RESPONSE)})),
@@ -52,8 +57,13 @@ public class AuthController {
             @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@Valid @RequestBody RequestUserLoginDto dto) {
-//        return userService.loginUser(dto);
-        return null;
+        LoginUser user = userService.findOne(dto.getEmail());
+        userService.validationPassword(user, dto.getPassword());
+
+        TokenDto token = authService.generateToken(user.getUserId(), user.getUserUid());
+        LoginResponse response = user.toResponse(token);
+
+        return CommonResponse.createResponse(HttpStatus.OK.value(), "로그인에 성공하였습니다.", response);
     }
 
     @Operation(summary = "Reissue Token", description = "토큰 재발급, refresh token 유효성 검사 후 토큰을 재발급 합니다.")

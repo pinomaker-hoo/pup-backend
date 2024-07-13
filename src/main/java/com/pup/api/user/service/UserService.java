@@ -54,4 +54,26 @@ public class UserService {
             throw new BadRequestException("이미 사용 중인 이메일 입니다.");
         }
     }
+
+    /**
+     * 로그인 유저 조회
+     */
+    public LoginUser findOne(String email) {
+        LoginUser user = userJpaRepository.findUserByEmail(email);
+
+        if (user == null) {
+            throw new NotFoundException("존재하지 않는 사용자 입니다.");
+        }
+
+        return user;
+    }
+
+    /**
+     * 비밀번호 검증
+     */
+    public void validationPassword(LoginUser loginUser, String password) {
+        if (!passwordEncoder.matches(password, loginUser.getPassword())) {
+            throw new BadRequestException("비밀번호가 일치하지 않습니다.");
+        }
+    }
 }

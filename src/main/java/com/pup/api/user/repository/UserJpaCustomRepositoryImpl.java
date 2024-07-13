@@ -24,17 +24,19 @@ public class UserJpaCustomRepositoryImpl implements UserJpaCustomRepository {
     }
 
     @Override
-    public LoginUser findUserByUsername(String username) {
+    public LoginUser findUserByEmail(String email) {
         QUser u = QUser.user;
 
         return queryFactory.select(
                         Projections.constructor(
                                 LoginUser.class,
                                 u.userId,
+                                u.email,
+                                u.password,
                                 u.nickname,
-                                u.password
-                        )
+                                u.userUid)
                 ).from(u)
-                .where(u.nickname.eq(username)).fetchOne();
+                .where(u.email.eq(email))
+                .fetchOne();
     }
 }
