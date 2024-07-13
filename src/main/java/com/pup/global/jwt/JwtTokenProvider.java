@@ -30,9 +30,9 @@ public class JwtTokenProvider {
     @Value("${jwt.refreshTokenValidityInSeconds}")
     private String refreshTokenValidationTime;
 
-    public TokenDto issueToken(Integer userId, UUID userUid) {
-        final String accessToken = generateToken(userId, userUid, Long.valueOf(accessTokenValidationTime));
-        final String refreshToken = generateToken(userId, userUid, Long.valueOf(refreshTokenValidationTime));
+    public TokenDto issueToken(Integer userId) {
+        final String accessToken = generateToken(userId, Long.valueOf(accessTokenValidationTime));
+        final String refreshToken = generateToken(userId, Long.valueOf(refreshTokenValidationTime));
 
         return TokenDto.builder()
                 .accessToken(accessToken)
@@ -40,8 +40,8 @@ public class JwtTokenProvider {
                 .build();
     }
 
-    public TokenDto reissueToken(Integer userId, UUID userUid, String refreshToken) {
-        final String accessToken = generateToken(userId, userUid, Long.valueOf(accessTokenValidationTime));
+    public TokenDto reissueToken(Integer userId, String refreshToken) {
+        final String accessToken = generateToken(userId, Long.valueOf(accessTokenValidationTime));
 
         return TokenDto.builder()
                 .accessToken(accessToken)
@@ -49,8 +49,8 @@ public class JwtTokenProvider {
                 .build();
     }
 
-    private String generateToken(Integer userId, UUID userUid, Long tokenValidationTime) {
-        final Map<String, Object> claims = createClaims(userId, userUid);
+    private String generateToken(Integer userId, Long tokenValidationTime) {
+        final Map<String, Object> claims = createClaims(userId);
         final PrivateKey privateKey = jwtConfig.getPrivateKey();
 
         return Jwts.builder()
@@ -61,13 +61,11 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    private Map<String, Object> createClaims(Integer userId, UUID userUid) {
+    private Map<String, Object> createClaims(Integer userId) {
         Map<String, Object> claims = new HashMap<>();
         String encodedId = encryptionUtils.encrypt(String.valueOf(userId));
-        String encodedRole = encryptionUtils.encrypt(String.valueOf(userUid));
 
         claims.put("userId", encodedId);
-        claims.put("userUid", encodedRole);
 
         return claims;
     }

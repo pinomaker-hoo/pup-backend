@@ -10,6 +10,7 @@ import com.pup.api.user.service.AuthService;
 import com.pup.api.user.service.UserService;
 import com.pup.global.dto.CommonResponse;
 import com.pup.global.dto.TokenDto;
+import com.pup.global.dto.TokenSingleDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -60,7 +61,7 @@ public class AuthController {
         LoginUser user = userService.findOne(dto.getEmail());
         userService.validationPassword(user, dto.getPassword());
 
-        TokenDto token = authService.generateToken(user.getUserId(), user.getUserUid());
+        TokenDto token = authService.generateToken(user.getUserId());
         LoginResponse response = user.toResponse(token);
 
         return CommonResponse.createResponse(HttpStatus.OK.value(), "로그인에 성공하였습니다.", response);
@@ -72,7 +73,8 @@ public class AuthController {
             @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
     @PostMapping("/reissue")
     public ResponseEntity<?> reissueToken(@Valid @RequestBody RequestTokenReissueDto dto) {
-//        return userService.reissueToken(dto);
-        return null;
+        TokenSingleDto token = authService.reissueToken(dto);
+
+        return CommonResponse.createResponse(HttpStatus.OK.value(), "토큰 재발급에 성공합니다.", token);
     }
 }

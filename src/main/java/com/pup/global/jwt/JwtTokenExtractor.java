@@ -11,6 +11,8 @@ import com.pup.global.dto.UserDetailDto;
 import com.pup.global.enums.UserRole;
 import com.pup.global.exception.UnAuthenticationException;
 
+import java.util.UUID;
+
 
 /**
  * JWT 토큰에 있는 유저 정보 추출 클래스
@@ -28,13 +30,11 @@ public class JwtTokenExtractor {
 
         Claims claims = jwtTokenValidator.getClaimsFromToken(jwt);
 
-        String encodedUserId = String.valueOf(claims.get("id"));
-        String encodedRole = String.valueOf(claims.get("role"));
+        String encodedUserId = String.valueOf(claims.get("userId"));
 
         Integer decodedUserId = Integer.valueOf(encryptionUtils.decrypt(encodedUserId));
-        UserRole decodedRole = UserRole.valueOf(encryptionUtils.decrypt(encodedRole));
 
-        return UserDetailDto.builder().userId(decodedUserId).role(decodedRole).build();
+        return UserDetailDto.builder().userId(decodedUserId).build();
     }
 
     /**

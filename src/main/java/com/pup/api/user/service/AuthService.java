@@ -22,8 +22,8 @@ public class AuthService {
     /**
      * Generate token
      */
-    public TokenDto generateToken(Integer userId, UUID userUid) {
-        return jwtTokenProvider.issueToken(userId, userUid);
+    public TokenDto generateToken(Integer userId) {
+        return jwtTokenProvider.issueToken(userId);
     }
 
     /**
@@ -37,14 +37,12 @@ public class AuthService {
         Claims claims = jwtTokenValidator.getClaimsFromToken(dto.getRefreshToken());
 
         String encodedUserId = String.valueOf(claims.get("userId"));
-        String encodedCustomerId = String.valueOf(claims.get("customerId"));
 
         // ** 정보 디코딩
         Integer decodedUserId = Integer.valueOf(encryptionUtils.decrypt(encodedUserId));
-        UUID decodedUserUid = UUID.fromString(encryptionUtils.decrypt(encodedCustomerId));
 
         // ** 토큰 생성
-        TokenDto tokenDto = jwtTokenProvider.reissueToken(decodedUserId, decodedUserUid, dto.getRefreshToken());
+        TokenDto tokenDto = jwtTokenProvider.reissueToken(decodedUserId, dto.getRefreshToken());
 
         return tokenDto.toSingleTokenDto();
     }
