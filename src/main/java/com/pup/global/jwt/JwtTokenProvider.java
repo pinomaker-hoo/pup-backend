@@ -14,6 +14,7 @@ import java.security.PrivateKey;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Slf4j
 @Component
@@ -29,9 +30,9 @@ public class JwtTokenProvider {
     @Value("${jwt.refreshTokenValidityInSeconds}")
     private String refreshTokenValidationTime;
 
-    public TokenDto issueToken(Integer userId, UserRole role) {
-        final String accessToken = generateToken(userId, role, Long.valueOf(accessTokenValidationTime));
-        final String refreshToken = generateToken(userId, role, Long.valueOf(refreshTokenValidationTime));
+    public TokenDto issueToken(Integer userId, UUID userUid) {
+        final String accessToken = generateToken(userId, userUid, Long.valueOf(accessTokenValidationTime));
+        final String refreshToken = generateToken(userId, userUid, Long.valueOf(refreshTokenValidationTime));
 
         return TokenDto.builder()
                 .accessToken(accessToken)
@@ -39,8 +40,8 @@ public class JwtTokenProvider {
                 .build();
     }
 
-    public TokenDto reissueToken(Integer userId, UserRole role, String refreshToken) {
-        final String accessToken = generateToken(userId, role, Long.valueOf(accessTokenValidationTime));
+    public TokenDto reissueToken(Integer userId, UUID userUid, String refreshToken) {
+        final String accessToken = generateToken(userId, userUid, Long.valueOf(accessTokenValidationTime));
 
         return TokenDto.builder()
                 .accessToken(accessToken)
@@ -48,8 +49,8 @@ public class JwtTokenProvider {
                 .build();
     }
 
-    private String generateToken(Integer userId, UserRole role, Long tokenValidationTime) {
-        final Map<String, Object> claims = createClaims(userId, role);
+    private String generateToken(Integer userId, UUID userUid, Long tokenValidationTime) {
+        final Map<String, Object> claims = createClaims(userId, userUid);
         final PrivateKey privateKey = jwtConfig.getPrivateKey();
 
         return Jwts.builder()
@@ -60,13 +61,13 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    private Map<String, Object> createClaims(Integer userId, UserRole role) {
+    private Map<String, Object> createClaims(Integer userId, UUID userUid) {
         Map<String, Object> claims = new HashMap<>();
         String encodedId = encryptionUtils.encrypt(String.valueOf(userId));
-        String encodedRole = encryptionUtils.encrypt(String.valueOf(role));
+        String encodedRole = encryptionUtils.encrypt(String.valueOf(userUid));
 
-        claims.put("id", encodedId);
-        claims.put("role", encodedRole);
+        claims.put("userId", encodedId);
+        claims.put("userUid", encodedRole);
 
         return claims;
     }

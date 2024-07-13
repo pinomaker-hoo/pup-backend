@@ -9,13 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TokenDto {
+public class TokenSingleDto {
     private String accessToken;
-    private String refreshToken;
-
-    public TokenSingleDto toSingleTokenDto() {
-        return TokenSingleDto.builder()
-                .accessToken(this.accessToken)
-                .build();
-    }
 }
