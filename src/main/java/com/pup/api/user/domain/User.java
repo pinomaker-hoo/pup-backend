@@ -1,5 +1,6 @@
 package com.pup.api.user.domain;
 
+import com.pup.api.dog.domain.Dog;
 import com.pup.global.enums.OpenRangeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,7 @@ import org.hibernate.annotations.Comment;
 import com.pup.global.domain.BaseTimeEntity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -65,4 +67,7 @@ public class User extends BaseTimeEntity {
     @Comment("마지막 산책 시간")
     @Column(nullable = true, name = "last_waking_date")
     private LocalDateTime lastWakingDate;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Dog> dogList;
 }

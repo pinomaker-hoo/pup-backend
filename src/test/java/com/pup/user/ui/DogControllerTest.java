@@ -42,7 +42,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 @DisplayName("Auth API Test")
-public class AuthControllerTest {
+public class DogControllerTest {
     @InjectMocks
     private AuthController authController;
 
