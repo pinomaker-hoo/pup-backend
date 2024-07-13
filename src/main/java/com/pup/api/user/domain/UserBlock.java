@@ -1,6 +1,5 @@
-package com.pup.api.friend.domain;
+package com.pup.api.user.domain;
 
-import com.pup.api.user.domain.User;
 import com.pup.global.domain.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -10,22 +9,22 @@ import lombok.NoArgsConstructor;
 
 
 @Entity
-@Table(name = "TB_FRIEND")
+@Table(name = "TB_USER_BLOCK")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Friend extends BaseTimeEntity {
+public class UserBlock extends BaseTimeEntity {
     @Id
-    @Column(name = "friend_id")
+    @Column(name = "user_block_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long friendId;
+    private Long userBlockId;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "friend_user_id", nullable = false)
-    private User friend;
+    @JoinColumn(name = "target_id", nullable = false)
+    private User target;
 }

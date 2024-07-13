@@ -1,10 +1,10 @@
-package com.pup.api.friend.repository;
-
+package com.pup.api.user.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class FriendJpaCustomRepositoryImpl implements FriendJpaCustomRepository {
+public class UserBlockJpaCustomRepositoryImpl implements UserBlockCustomRepository {
     private final JPAQueryFactory queryFactory;
+
 }

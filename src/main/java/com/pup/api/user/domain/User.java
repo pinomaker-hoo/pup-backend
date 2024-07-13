@@ -74,4 +74,7 @@ public class User extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Friend> friendList;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<UserBlock> userBlockList;
 }
