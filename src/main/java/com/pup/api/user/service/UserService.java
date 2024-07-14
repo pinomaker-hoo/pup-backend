@@ -1,6 +1,7 @@
 package com.pup.api.user.service;
 
 import com.pup.api.user.domain.User;
+import com.pup.api.user.event.vo.UserV0;
 import com.pup.api.user.repository.UserJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -59,6 +60,19 @@ public class UserService {
     public User findOne(Integer userId) {
         return userJpaRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("존재하지 않는 사용자 입니다."));
+    }
+
+    /**
+     * 사용자 조회
+     */
+    public UserV0 findUserV0One(Integer userId) {
+        UserV0 user = userJpaRepository.findUserByUserId(userId);
+
+        if (user == null) {
+            throw new NotFoundException("존재하지 않는 사용자 입니다.");
+        }
+
+        return user;
     }
 
     /**

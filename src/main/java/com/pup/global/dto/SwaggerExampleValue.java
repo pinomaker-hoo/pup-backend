@@ -16,8 +16,8 @@ public class SwaggerExampleValue {
     // ** POST : /api/v1/auth/reissue
     public static final String REISSUE_TOKEN_RESPONSE = "{\"code\": 200, \"status\": \"OK\", \"data\": {\"accessToken\": \"eyJhbGciOiJSUzI1NiJ9.eyJpZCI6Ind0NFkzaWhmZGpEWFdITzR0c3UyUnciLCJpYXQiOjE3MTY3NDQ5NjAsImV4cCI6MTcxNjc0Njc2MH0.WLstl9tEgsoqRUL2W_YPrvBS45jIU6rmMgvv_hAsTcRJJsGs9gUq0eJcwjdNpFUO6HPyvCMr76aST9jUIt6x7SA5IzXyB7TgX0fZ2_4DyGvn6oeZ9c8kXswSny_SmPVlBuivllC2PfxLAy1niJwQyw2VYWCl6HbkUyTyr9Dx5gXGP2KQk92XEEg4uV-JoDVHHTWIKgCa60xL3KRDFTmJPhTh2lC91GzZG92wULmkrcmTGphAcVNwwF32SZcgjhvrk1FwwOoIf4yXuzmJs0KKPaR3WJJdjunlH7BNIrHyhXPPbl2ltEV7xO2E7O7XJbx8mdsoAYpDo5Jz2qPPs8kJOQ\"}, \"message\": \"토큰 재발급에 성공합니다.\"}";
 
-    // ** POST : /api/v1/user
-    public static final String SAMPLE_RESPONSE = "{\"code\":200,\"status\":\"OK\",\"message\":\"샘플\"}";
+    // ** GET : /api/v1/user
+    public static final String FIND_USER = "{\"code\": 200, \"status\": \"OK\", \"data\": {\"userId\": 4, \"email\": \"test@test.com\", \"nickname\": \"\", \"userUid\": \"7b4e6ef6-c29b-4c58-9787-7fcae9a7babb\", \"profile\": \"\"}, \"message\": \"유저 정보를 조회합니다.\"}";
 
     // ** POST : /api/v1/dog
     public static final String SAVE_DOG = "{\"code\": 200, \"status\": \"OK\", \"message\": \"강아지 저장에 성공 했습니다.\"}";
