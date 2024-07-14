@@ -56,6 +56,11 @@ public class UserService {
         return user;
     }
 
+    public User findOne(Integer userId) {
+        return userJpaRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("존재하지 않는 사용자 입니다."));
+    }
+
     /**
      * 비밀번호 검증
      */
