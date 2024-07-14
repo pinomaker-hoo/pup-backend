@@ -18,4 +18,7 @@ public class SwaggerExampleValue {
 
     // ** POST : /api/v1/user
     public static final String SAMPLE_RESPONSE = "{\"code\":200,\"status\":\"OK\",\"message\":\"샘플\"}";
+
+    // ** POST : /api/v1/dog
+    public static final String SAVE_DOG = "{\"code\": 200, \"status\": \"OK\", \"message\": \"강아지 저장에 성공 했습니다.\"}";
 }

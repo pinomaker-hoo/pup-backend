@@ -38,10 +38,10 @@ public class DogController {
 
     @Operation(summary = "강아지 생성", description = "강아지를 생성합니다.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "강아지 저장에 성공하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.USER_SAVE_RESPONSE))),
+            @ApiResponse(responseCode = "200", description = "강아지 저장에 성공하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.SAVE_DOG))),
             @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
     @PostMapping
-    public ResponseEntity<?> saveUser(@Valid @RequestBody RequestDogSaveDto dto, HttpServletRequest httpServletRequest) {
+    public ResponseEntity<?> saveDog(@Valid @RequestBody RequestDogSaveDto dto, HttpServletRequest httpServletRequest) {
         UserDetailDto userDetailDto = jwtTokenExtractor.extractUserId(httpServletRequest);
         User user = userService.findOne(userDetailDto.getUserId());
         dogService.saveDogList(user, dto);
