@@ -27,4 +27,7 @@ public class SwaggerExampleValue {
 
     // ** POST : /api/v1/dog
     public static final String SAVE_DOG = "{\"code\": 200, \"status\": \"OK\", \"message\": \"강아지 저장에 성공 했습니다.\"}";
+
+    // ** GET : /api/v1/dog
+    public static final String FIND_DOG_LIST = "{\"code\":200,\"status\":\"OK\",\"data\":[{\"dogId\":1,\"name\":\"뽀삐\",\"profile\":\"https://\",\"birth\":\"2021-01-01\",\"isNeutered\":false}],\"message\":\"강아지 리스트를 조회합니다.\"}";
 }

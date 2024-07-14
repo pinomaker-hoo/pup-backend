@@ -1,9 +1,11 @@
 package com.pup.api.dog.ui;
 
 import com.pup.api.dog.event.dto.RequestDogSaveDto;
+import com.pup.api.dog.event.vo.DogV0;
 import com.pup.api.dog.service.DogService;
 import com.pup.api.user.domain.User;
 import com.pup.api.user.event.dto.RequestUserSaveDto;
+import com.pup.api.user.event.vo.UserV0;
 import com.pup.api.user.service.UserService;
 import com.pup.global.dto.CommonResponse;
 import com.pup.global.dto.SwaggerExampleValue;
@@ -21,10 +23,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -49,4 +50,15 @@ public class DogController {
         return CommonResponse.createResponseMessage(HttpStatus.OK.value(), "강아지 저장에 성공 했습니다.");
     }
 
+    @Operation(summary = "강아지 리스트 조회", description = "강아지 리스트를 조회합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "강아지 리스트를 조회합니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.FIND_DOG_LIST))),
+            @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
+    @GetMapping
+    public ResponseEntity<?> findUser(HttpServletRequest httpServletRequest) {
+        UserDetailDto userDetailDto = jwtTokenExtractor.extractUserId(httpServletRequest);
+        List<DogV0> response = dogService.findDogListByUserId(userDetailDto.getUserId());
+
+        return CommonResponse.createResponse(HttpStatus.OK.value(), "강아지 리스트를 조회합니다.", response);
+    }
 }

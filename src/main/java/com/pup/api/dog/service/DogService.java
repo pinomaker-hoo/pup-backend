@@ -3,12 +3,15 @@ package com.pup.api.dog.service;
 import com.pup.api.dog.domain.Dog;
 import com.pup.api.dog.event.dto.RequestDogSaveDto;
 import com.pup.api.dog.event.dto.SaveDog;
+import com.pup.api.dog.event.vo.DogV0;
 import com.pup.api.dog.repository.DogJpaRepository;
 import com.pup.api.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -21,6 +24,13 @@ public class DogService {
         for (SaveDog dog : dto.getDogList()) {
             saveDog(user, dog);
         }
+    }
+
+    /**
+     * 유저 아이디로 강아지 리스트 조회
+     */
+    public List<DogV0> findDogListByUserId(Integer userId) {
+        return dogJpaRepository.findDogListByUserId(userId);
     }
 
     /**
