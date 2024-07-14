@@ -2,6 +2,7 @@ package com.pup.api.user.ui;
 
 import com.pup.api.dog.event.dto.RequestDogSaveDto;
 import com.pup.api.user.domain.User;
+import com.pup.api.user.event.dto.RequestUserUpdateDto;
 import com.pup.api.user.event.vo.UserV0;
 import com.pup.api.user.service.UserService;
 import com.pup.global.dto.CommonResponse;
@@ -42,5 +43,18 @@ public class UserController {
 
 
         return CommonResponse.createResponse(HttpStatus.OK.value(), "유저 정보를 조회합니다.", user);
+    }
+
+    @Operation(summary = "유저 정보 수정", description = "유저 정보를 수정합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "유저 정보를 수정합니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.UPDATE_USER))),
+            @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
+    @PutMapping("/")
+    public ResponseEntity<?> updateUser(@Valid @RequestBody RequestUserUpdateDto dto, HttpServletRequest httpServletRequest) {
+        UserDetailDto userDetailDto = jwtTokenExtractor.extractUserId(httpServletRequest);
+        User user = userService.findOne(userDetailDto.getUserId());
+        userService.updateUser(user, dto);
+
+        return CommonResponse.createResponseMessage(HttpStatus.OK.value(), "유저 정보를 수정합니다.");
     }
 }

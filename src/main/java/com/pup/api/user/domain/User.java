@@ -77,4 +77,9 @@ public class User extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<UserBlock> userBlockList;
+
+    public void changeUser(String profile, String description){
+        this.profile = profile;
+        this.description = description;
+    }
 }

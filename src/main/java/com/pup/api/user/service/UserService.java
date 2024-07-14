@@ -1,6 +1,7 @@
 package com.pup.api.user.service;
 
 import com.pup.api.user.domain.User;
+import com.pup.api.user.event.dto.RequestUserUpdateDto;
 import com.pup.api.user.event.vo.UserV0;
 import com.pup.api.user.repository.UserJpaRepository;
 import lombok.RequiredArgsConstructor;
@@ -57,9 +58,21 @@ public class UserService {
         return user;
     }
 
+    /**
+     * 사용자 조회
+     */
     public User findOne(Integer userId) {
         return userJpaRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("존재하지 않는 사용자 입니다."));
+    }
+
+
+    /**
+     * 사용자 정보 수정
+     */
+    public void updateUser(User user, RequestUserUpdateDto dto) {
+        user.changeUser(dto.getProfile(), dto.getDescription());
+        userJpaRepository.save(user);
     }
 
     /**
