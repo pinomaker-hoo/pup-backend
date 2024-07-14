@@ -19,8 +19,11 @@ public class SwaggerExampleValue {
     // ** GET : /api/v1/user
     public static final String FIND_USER = "{\"code\": 200, \"status\": \"OK\", \"data\": {\"userId\": 4, \"email\": \"test@test.com\", \"nickname\": \"\", \"userUid\": \"7b4e6ef6-c29b-4c58-9787-7fcae9a7babb\", \"profile\": \"https://123.png\", \"description\": \"안녕하세요. 저는 000 입니다.\"}, \"message\": \"유저 정보를 조회합니다.\"}";
 
-    // ** POST : /api/v1/user
+    // ** PUT : /api/v1/user
     public static final String UPDATE_USER = "{\"code\": 200, \"status\": \"OK\", \"message\": \"유저 정보를 수정합니다.\"}";
+
+    // ** PATCH : /api/v1/user/password
+    public static final String UPDATE_USER_PASSWORD = "{\"code\": 200, \"status\": \"OK\", \"message\": \"유저 비밀번호를 수정합니다.\"}";
 
     // ** POST : /api/v1/dog
     public static final String SAVE_DOG = "{\"code\": 200, \"status\": \"OK\", \"message\": \"강아지 저장에 성공 했습니다.\"}";

@@ -35,6 +35,14 @@ public class UserService {
     }
 
     /**
+     * 비밀번호 수정
+     */
+    public void updatePassword(User user, String password) {
+        user.changePassword(passwordEncoder.encode(password));
+        userJpaRepository.save(user);
+    }
+
+    /**
      * 이메일 중복 체크
      */
     public void existedUserByEmail(String email) {
@@ -93,6 +101,15 @@ public class UserService {
      */
     public void validationPassword(LoginUser loginUser, String password) {
         if (!passwordEncoder.matches(password, loginUser.getPassword())) {
+            throw new BadRequestException("비밀번호가 일치하지 않습니다.");
+        }
+    }
+
+    /**
+     * 비밀번호 검증
+     */
+    public void validationPassword(User user, String password) {
+        if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new BadRequestException("비밀번호가 일치하지 않습니다.");
         }
     }
