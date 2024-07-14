@@ -14,4 +14,5 @@ public class UserV0 {
     private String nickname;
     private UUID userUid;
     private String profile;
+    private String description;
 }

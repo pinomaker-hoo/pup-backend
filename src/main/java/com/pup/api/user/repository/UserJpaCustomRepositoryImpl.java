@@ -52,7 +52,8 @@ public class UserJpaCustomRepositoryImpl implements UserJpaCustomRepository {
                                 u.email,
                                 u.nickname,
                                 u.userUid,
-                                u.profile
+                                u.profile,
+                                u.description
                         )
                 ).from(u)
                 .where(u.userId.eq(userId))
