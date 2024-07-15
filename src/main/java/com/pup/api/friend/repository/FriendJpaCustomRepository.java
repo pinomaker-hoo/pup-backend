@@ -8,5 +8,5 @@ import java.util.List;
 public interface FriendJpaCustomRepository {
     Boolean existedFriend(Integer userId, Integer targetUserId);
 
-    List<FriendV0> findFriendList(Integer userId);
+    List<FriendV0> findFriendList(Integer userId, String name);
 }

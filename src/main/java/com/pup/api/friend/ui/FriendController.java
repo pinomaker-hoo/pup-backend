@@ -60,10 +60,10 @@ public class FriendController {
             @ApiResponse(responseCode = "200", description = "친구 리스트를 조회합니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.FIND_FRIEND_LIST))),
             @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
     @GetMapping
-    public ResponseEntity<?> findFriendList(HttpServletRequest httpServletRequest) {
+    public ResponseEntity<?> findFriendList(HttpServletRequest httpServletRequest, @RequestParam(value = "name", required = false) String name) {
         UserDetailDto userDetailDto = jwtTokenExtractor.extractUserId(httpServletRequest);
 
-        List<FriendV0> response = friendService.findFriendList(userDetailDto.getUserId());
+        List<FriendV0> response = friendService.findFriendList(userDetailDto.getUserId(), name);
 
         return CommonResponse.createResponse(HttpStatus.OK.value(), "친구 리스트를 조회합니다.", response);
     }

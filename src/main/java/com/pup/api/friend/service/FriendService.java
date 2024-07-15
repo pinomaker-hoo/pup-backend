@@ -33,8 +33,8 @@ public class FriendService {
     /**
      * 친구 리스트 조회
      */
-    public List<FriendV0> findFriendList(Integer userId) {
-        return friendJpaRepository.findFriendList(userId);
+    public List<FriendV0> findFriendList(Integer userId, String name) {
+        return friendJpaRepository.findFriendList(userId, name);
     }
 
     /**

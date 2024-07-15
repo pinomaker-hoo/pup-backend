@@ -9,6 +9,7 @@ import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.JPQLQuery;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
@@ -35,11 +36,11 @@ public class FriendJpaCustomRepositoryImpl implements FriendJpaCustomRepository 
     }
 
     @Override
-    public List<FriendV0> findFriendList(Integer userId) {
+    public List<FriendV0> findFriendList(Integer userId, String name) {
         QFriend f = QFriend.friend1;
         QDog d = QDog.dog;
 
-        List<Tuple> results = queryFactory
+        JPAQuery<Tuple> query = queryFactory
                 .select(
                         f.friendId,
                         f.friend.userId,
@@ -51,8 +52,13 @@ public class FriendJpaCustomRepositoryImpl implements FriendJpaCustomRepository 
                 )
                 .from(f)
                 .leftJoin(f.friend.dogList, d)
-                .where(f.user.userId.eq(userId))
-                .fetch();
+                .where(f.user.userId.eq(userId));
+
+        if (name != null) {
+            query = query.where(f.friend.nickname.contains(name));
+        }
+
+        List<Tuple> results = query.fetch();
 
         Map<Long, FriendV0> friendMap = new HashMap<>();
 
