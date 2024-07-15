@@ -39,4 +39,7 @@ public class SwaggerExampleValue {
     public static final String SAVE_FRIEND_RESPONSE = "{\"code\":200,\"status\":\"OK\",\"message\":\"친구를 등록합니다.\"}";
     public static final String NOT_FOUND_USER_RESPONSE = "{\"code\":404,\"status\":\"NOT_FOUND\",\"message\":\"존재하지 않는 사용자 입니다.\"}";
     public static final String NOT_SELF_SAVE_FRIEND_RESPONSE = "{\"code\":400,\"status\":\"BAD_REQUEST\",\"message\":\"자기 자신을 친구로 등록할 수 없습니다.\"}";
+
+    // ** DELETE : /api/v1/friend
+    public static final String DELETE_FRIEND_LIST = "{\"code\":200,\"status\":\"OK\",\"message\":\"친구를 삭제합니다.\"}";
 }

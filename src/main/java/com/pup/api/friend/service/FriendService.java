@@ -38,6 +38,13 @@ public class FriendService {
     }
 
     /**
+     * 친구 삭제
+     */
+    public void deleteFriend(List<Long> friendIdList) {
+        friendJpaRepository.deleteFriend(friendIdList);
+    }
+
+    /**
      * 친구 생성 유효성 체크
      */
     public void validationSaveFriend(Integer userId, Integer targetUserId) {

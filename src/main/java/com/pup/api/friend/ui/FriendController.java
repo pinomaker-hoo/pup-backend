@@ -67,4 +67,15 @@ public class FriendController {
 
         return CommonResponse.createResponse(HttpStatus.OK.value(), "친구 리스트를 조회합니다.", response);
     }
+
+    @Operation(summary = "친구 삭제", description = "친구를 삭제합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "친구를 삭제합니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.DELETE_FRIEND_LIST))),
+            @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
+    @DeleteMapping
+    public ResponseEntity<?> deleteFriendList(@RequestParam List<Long> friendIds) {
+        friendService.deleteFriend(friendIds);
+
+        return CommonResponse.createResponseMessage(HttpStatus.OK.value(), "친구를 삭제합니다.");
+    }
 }
