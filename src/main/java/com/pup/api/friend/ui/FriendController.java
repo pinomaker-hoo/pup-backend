@@ -2,6 +2,7 @@ package com.pup.api.friend.ui;
 
 import com.pup.api.dog.event.dto.RequestDogSaveDto;
 import com.pup.api.friend.event.dto.RequestFriendSaveDto;
+import com.pup.api.friend.event.vo.FriendV0;
 import com.pup.api.friend.service.FriendService;
 import com.pup.api.user.domain.User;
 import com.pup.api.user.service.UserService;
@@ -21,10 +22,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -44,7 +44,7 @@ public class FriendController {
             @ApiResponse(responseCode = "404", description = "강아지 저장에 성공하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.NOT_FOUND_USER_RESPONSE))),
             @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
     @PostMapping
-    public ResponseEntity<?> saveDog(@Valid @RequestBody RequestFriendSaveDto dto, HttpServletRequest httpServletRequest) {
+    public ResponseEntity<?> saveFriend(@Valid @RequestBody RequestFriendSaveDto dto, HttpServletRequest httpServletRequest) {
         UserDetailDto userDetailDto = jwtTokenExtractor.extractUserId(httpServletRequest);
         friendService.validationSaveFriend(userDetailDto.getUserId(), dto.getUserId());
 
@@ -53,5 +53,18 @@ public class FriendController {
         friendService.saveFriend(user, targetUser);
 
         return CommonResponse.createResponseMessage(HttpStatus.OK.value(), "친구를 등록합니다.");
+    }
+
+    @Operation(summary = "친구 리스트 조회", description = "친구 리스트를 조회합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "친구 리스트를 조회합니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.FIND_FRIEND_LIST))),
+            @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
+    @GetMapping
+    public ResponseEntity<?> findFriendList(HttpServletRequest httpServletRequest) {
+        UserDetailDto userDetailDto = jwtTokenExtractor.extractUserId(httpServletRequest);
+
+        List<FriendV0> response = friendService.findFriendList(userDetailDto.getUserId());
+
+        return CommonResponse.createResponse(HttpStatus.OK.value(), "친구 리스트를 조회합니다.", response);
     }
 }

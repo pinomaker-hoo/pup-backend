@@ -1,12 +1,15 @@
 package com.pup.api.friend.service;
 
 import com.pup.api.friend.domain.Friend;
+import com.pup.api.friend.event.vo.FriendV0;
 import com.pup.api.friend.repository.FriendJpaRepository;
 import com.pup.api.user.domain.User;
 import com.pup.global.exception.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -25,6 +28,13 @@ public class FriendService {
                         .friend(targetUser)
                         .build()
         );
+    }
+
+    /**
+     * 친구 리스트 조회
+     */
+    public List<FriendV0> findFriendList(Integer userId) {
+        return friendJpaRepository.findFriendList(userId);
     }
 
     /**

@@ -31,6 +31,9 @@ public class SwaggerExampleValue {
     // ** GET : /api/v1/dog
     public static final String FIND_DOG_LIST = "{\"code\":200,\"status\":\"OK\",\"data\":[{\"dogId\":1,\"name\":\"뽀삐\",\"profile\":\"https://\",\"birth\":\"2021-01-01\",\"isNeutered\":false}],\"message\":\"강아지 리스트를 조회합니다.\"}";
 
+    // ** GET : /api/v1/friend
+    public static final String FIND_FRIEND_LIST = "{\"code\":200,\"status\":\"OK\",\"data\":[{\"friendId\":1,\"userId\":5,\"nickname\":\"\",\"description\":\"\",\"profile\":\"\",\"lastWakingDate\":null,\"dogProfileList\":[\"123123123\",\"https://\"]}],\"message\":\"친구 리스트를 조회합니다.\"}";
+
     // ** POST : /api/v1/friend
     public static final String EXISTED_FRIEND_RESPONSE = "{\"code\":400,\"status\":\"BAD_REQUEST\",\"message\":\"이미 친구로 등록된 사용자 입니다.\"}";
     public static final String SAVE_FRIEND_RESPONSE = "{\"code\":200,\"status\":\"OK\",\"message\":\"친구를 등록합니다.\"}";
