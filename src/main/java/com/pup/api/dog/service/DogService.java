@@ -27,6 +27,13 @@ public class DogService {
     }
 
     /**
+     * 강아지 조회
+     */
+    public Dog findOne(Long dogId) {
+        return dogJpaRepository.findById(dogId).orElseThrow(() -> new IllegalArgumentException("해당 강아지가 없습니다."));
+    }
+
+    /**
      * 유저 아이디로 강아지 리스트 조회
      */
     public List<DogV0> findDogListByUserId(Integer userId) {

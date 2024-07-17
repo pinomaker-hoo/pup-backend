@@ -1,23 +1,23 @@
 package com.pup.api.walkingTrail.domain;
 
+import com.pup.api.dog.domain.Dog;
 import com.pup.api.user.domain.User;
+import com.pup.api.walkingTrail.event.dto.RequestWalkingTrailSaveDto;
 import com.pup.global.domain.BaseTimeEntity;
 import com.pup.global.enums.OpenRangeEnum;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Comment;
 
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "TB_WALKING_TRAIL")
 @Getter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class WalkingTrail extends BaseTimeEntity {
     @Id
     @Column(name = "walking_trail_id")
@@ -25,8 +25,12 @@ public class WalkingTrail extends BaseTimeEntity {
     private Long walkingTrailId;
 
     @Comment("이름")
-    @Column(length = 50, nullable = false)
+    @Column(length = 50, nullable = true)
     private String name;
+
+    @Comment("산책로 UID")
+    @Column(nullable = false, name = "walking_trail_uid")
+    private UUID walkingTrailUid;
 
     @Comment("산책 시간")
     @Column(nullable = false)
@@ -37,7 +41,7 @@ public class WalkingTrail extends BaseTimeEntity {
     private Float distance;
 
     @Comment("산책 기록 공개 범위")
-    @Column(nullable = false, name = "open_range")
+    @Column(nullable = true, name = "open_range")
     @Enumerated(EnumType.STRING)
     private OpenRangeEnum openRange;
 
@@ -46,7 +50,7 @@ public class WalkingTrail extends BaseTimeEntity {
     private String review;
 
     @Comment("별점")
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Integer rating;
 
     @OneToMany(mappedBy = "walkingTrail", cascade = CascadeType.REMOVE)
@@ -58,4 +62,27 @@ public class WalkingTrail extends BaseTimeEntity {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @Builder
+    public WalkingTrail(User user) {
+        this.time = 0;
+        this.distance = 0f;
+        this.user = user;
+        this.walkingTrailUid = UUID.randomUUID();
+    }
+
+    public WalkingTrailItem toWalkingTrailItem(Float lat, Float lng) {
+        return WalkingTrailItem.builder()
+                .walkingTrail(this)
+                .lat(lat)
+                .lng(lng)
+                .build();
+    }
+
+    public WalkingTrailDog toWalkingTrailDog(Dog dog) {
+        return WalkingTrailDog.builder()
+                .walkingTrail(this)
+                .dog(dog)
+                .build();
+    }
 }

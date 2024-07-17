@@ -1,11 +1,31 @@
 package com.pup.api.walkingTrail.ui;
 
+import com.pup.api.user.domain.User;
+import com.pup.api.user.event.dto.RequestUserUpdateDto;
+import com.pup.api.user.service.UserService;
+import com.pup.api.walkingTrail.domain.WalkingTrail;
+import com.pup.api.walkingTrail.event.dto.RequestWalkingTrailSaveDto;
+import com.pup.api.walkingTrail.service.WalkingTrailDogService;
+import com.pup.api.walkingTrail.service.WalkingTrailImageService;
+import com.pup.api.walkingTrail.service.WalkingTrailItemService;
 import com.pup.api.walkingTrail.service.WalkingTrailService;
+import com.pup.global.dto.CommonResponse;
+import com.pup.global.dto.SwaggerExampleValue;
+import com.pup.global.dto.UserDetailDto;
+import com.pup.global.jwt.JwtTokenExtractor;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -14,5 +34,23 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class WalkingTrailController {
     private final WalkingTrailService walkingTrailService;
+    private final WalkingTrailDogService walkingTrailDogService;
+    private final WalkingTrailItemService walkingTrailItemService;
+    private final WalkingTrailImageService walkingTrailImageService;
+    private final UserService userService;
+    private final JwtTokenExtractor jwtTokenExtractor;
 
+    @Operation(summary = "산책로 생성", description = "산책로를 생성합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "산책로를 생성합니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.SAVE_WALKING_TRAIL))),
+            @ApiResponse(responseCode = "404", description = "강아지를 찾을 수 없습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.NOT_FOUND_DOG_RESPONSE))),
+            @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
+    @PostMapping
+    public ResponseEntity<?> saveWalkingTrail(@Valid @RequestBody RequestWalkingTrailSaveDto dto, HttpServletRequest httpServletRequest) {
+        UserDetailDto userDetailDto = jwtTokenExtractor.extractUserId(httpServletRequest);
+        User user = userService.findOne(userDetailDto.getUserId());
+        WalkingTrail walkingTrail = walkingTrailService.saveWalkingTrail(user, dto);
+
+        return CommonResponse.createResponse(HttpStatus.OK.value(), "산책로를 생성합니다.", walkingTrail.getWalkingTrailUid());
+    }
 }
