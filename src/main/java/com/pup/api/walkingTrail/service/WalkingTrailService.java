@@ -4,10 +4,13 @@ import com.pup.api.user.domain.User;
 import com.pup.api.walkingTrail.domain.WalkingTrail;
 import com.pup.api.walkingTrail.event.dto.RequestWalkingTrailSaveDto;
 import com.pup.api.walkingTrail.repository.WalkingTrailJpaRepository;
+import com.pup.global.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -30,5 +33,12 @@ public class WalkingTrailService {
         walkingTrailDogService.saveWalkingTrailDogList(walkingTrail, dto.getDogIdList());
 
         return walkingTrail;
+    }
+
+    /**
+     * 산책로 조회
+     */
+    public WalkingTrail findOne(UUID walkingTrailUid) {
+        return walkingTrailJpaRepository.findWalkingTrailByWalkingTrailUid(walkingTrailUid).orElseThrow(() -> new NotFoundException("산책로를 찾을 수 없습니다."));
     }
 }

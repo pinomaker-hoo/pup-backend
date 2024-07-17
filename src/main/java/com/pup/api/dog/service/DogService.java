@@ -6,6 +6,7 @@ import com.pup.api.dog.event.dto.SaveDog;
 import com.pup.api.dog.event.vo.DogV0;
 import com.pup.api.dog.repository.DogJpaRepository;
 import com.pup.api.user.domain.User;
+import com.pup.global.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ public class DogService {
      * 강아지 조회
      */
     public Dog findOne(Long dogId) {
-        return dogJpaRepository.findById(dogId).orElseThrow(() -> new IllegalArgumentException("해당 강아지가 없습니다."));
+        return dogJpaRepository.findById(dogId).orElseThrow(() -> new NotFoundException("해당 강아지가 없습니다."));
     }
 
     /**
