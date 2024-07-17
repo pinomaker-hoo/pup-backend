@@ -10,6 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
 
+import java.util.List;
+
 @Entity
 @Table(name = "TB_WALKING_TRAIL")
 @Getter
@@ -46,6 +48,9 @@ public class WalkingTrail extends BaseTimeEntity {
     @Comment("별점")
     @Column(nullable = false)
     private Integer rating;
+
+    @OneToMany(mappedBy = "walkingTrail", cascade = CascadeType.REMOVE)
+    private List<WalkingTrailItem> walkingTrailItemList;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
