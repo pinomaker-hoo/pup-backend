@@ -1,6 +1,7 @@
 package com.pup.api.dog.domain;
 
 import com.pup.api.user.domain.User;
+import com.pup.api.walkingTrail.domain.WalkingTrailDog;
 import com.pup.global.domain.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "TB_DOG")
@@ -42,4 +44,7 @@ public class Dog extends BaseTimeEntity {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @OneToMany(mappedBy = "dog", cascade = CascadeType.REMOVE)
+    private List<WalkingTrailDog> walkingTrailDogList;
 }
