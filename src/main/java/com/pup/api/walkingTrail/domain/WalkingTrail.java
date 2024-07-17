@@ -85,4 +85,13 @@ public class WalkingTrail extends BaseTimeEntity {
                 .dog(dog)
                 .build();
     }
+
+    public WalkingTrailImage toWalkingTrailImage(Float lat, Float lng, String path) {
+        return WalkingTrailImage.builder()
+                .walkingTrail(this)
+                .lat(lat)
+                .lng(lng)
+                .path(path)
+                .build();
+    }
 }

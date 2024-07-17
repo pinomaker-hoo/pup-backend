@@ -39,6 +39,9 @@ public class SwaggerExampleValue {
     public static final String SAVE_WALKING_TRAIL_ITEM = "{\"code\":200,\"status\":\"OK\", \"message\":\"산책로 지점을 생성합니다.\"}";
     public static final String NOT_FOUND_WALKING_TRAIL = "{\"code\":404,\"status\":\"NOT_FOUND\",\"message\":\"산책로를 찾을 수 없습니다.\"}";
 
+    // ** POST : /api/v1/walking-trail/image
+    public static final String SAVE_WALKING_TRAIL_IMAGE = "{\"code\":200,\"status\":\"OK\", \"message\":\"산책로 이미지를 생성합니다.\"}";
+
     // ** GET : /api/v1/friend
     public static final String FIND_FRIEND_LIST = "{\"code\":200,\"status\":\"OK\",\"data\":[{\"friendId\":1,\"userId\":5,\"nickname\":\"\",\"description\":\"\",\"profile\":\"\",\"lastWakingDate\":null,\"dogProfileList\":[\"123123123\",\"https://\"]}],\"message\":\"친구 리스트를 조회합니다.\"}";
 
