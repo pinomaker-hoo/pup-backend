@@ -41,6 +41,7 @@ public class FriendController {
             @ApiResponse(responseCode = "200", description = "강아지 저장에 성공하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.SAVE_FRIEND_RESPONSE))),
             @ApiResponse(responseCode = "400-1", description = "이미 친구로 등록된 사용자 입니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.EXISTED_FRIEND_RESPONSE))),
             @ApiResponse(responseCode = "400-2", description = "", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.NOT_SELF_SAVE_FRIEND_RESPONSE))),
+            @ApiResponse(responseCode = "401", description = "토큰 정보가 유효하지 않습니다.", content = @Content(mediaType = "application/json", examples = {@ExampleObject(value = SwaggerExampleValue.UN_AUTHENTICATION_RESPONSE)})),
             @ApiResponse(responseCode = "404", description = "강아지 저장에 성공하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.NOT_FOUND_USER_RESPONSE))),
             @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
     @PostMapping
@@ -58,6 +59,7 @@ public class FriendController {
     @Operation(summary = "친구 리스트 조회", description = "친구 리스트를 조회합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "친구 리스트를 조회합니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.FIND_FRIEND_LIST))),
+            @ApiResponse(responseCode = "401", description = "토큰 정보가 유효하지 않습니다.", content = @Content(mediaType = "application/json", examples = {@ExampleObject(value = SwaggerExampleValue.UN_AUTHENTICATION_RESPONSE)})),
             @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
     @GetMapping
     public ResponseEntity<?> findFriendList(HttpServletRequest httpServletRequest, @RequestParam(value = "name", required = false) String name) {
@@ -71,6 +73,7 @@ public class FriendController {
     @Operation(summary = "친구 삭제", description = "친구를 삭제합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "친구를 삭제합니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.DELETE_FRIEND_LIST))),
+            @ApiResponse(responseCode = "401", description = "토큰 정보가 유효하지 않습니다.", content = @Content(mediaType = "application/json", examples = {@ExampleObject(value = SwaggerExampleValue.UN_AUTHENTICATION_RESPONSE)})),
             @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
     @DeleteMapping
     public ResponseEntity<?> deleteFriendList(@RequestParam List<Long> friendIds) {

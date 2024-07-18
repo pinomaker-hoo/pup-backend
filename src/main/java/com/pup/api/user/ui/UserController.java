@@ -36,6 +36,7 @@ public class UserController {
     @Operation(summary = "유저 정보 조회", description = "유저 정보를 조회합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "유저 정보를 조회합니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.FIND_USER))),
+            @ApiResponse(responseCode = "401", description = "토큰 정보가 유효하지 않습니다.", content = @Content(mediaType = "application/json", examples = {@ExampleObject(value = SwaggerExampleValue.UN_AUTHENTICATION_RESPONSE)})),
             @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
     @GetMapping
     public ResponseEntity<?> findUser(HttpServletRequest httpServletRequest) {
@@ -49,6 +50,7 @@ public class UserController {
     @Operation(summary = "유저 정보 수정", description = "유저 정보를 수정합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "유저 정보를 수정합니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.UPDATE_USER))),
+            @ApiResponse(responseCode = "401", description = "토큰 정보가 유효하지 않습니다.", content = @Content(mediaType = "application/json", examples = {@ExampleObject(value = SwaggerExampleValue.UN_AUTHENTICATION_RESPONSE)})),
             @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
     @PutMapping
     public ResponseEntity<?> updateUser(@Valid @RequestBody RequestUserUpdateDto dto, HttpServletRequest httpServletRequest) {
@@ -62,6 +64,7 @@ public class UserController {
     @Operation(summary = "유저 비밀번호 수정", description = "유저 비밀번호를 수정합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "유저 비밀번호를 수정합니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.UPDATE_USER_PASSWORD))),
+            @ApiResponse(responseCode = "401", description = "토큰 정보가 유효하지 않습니다.", content = @Content(mediaType = "application/json", examples = {@ExampleObject(value = SwaggerExampleValue.UN_AUTHENTICATION_RESPONSE)})),
             @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
     @PatchMapping("/password")
     public ResponseEntity<?> updatePassword(@Valid @RequestBody RequestUserPasswordDto dto, HttpServletRequest httpServletRequest) {

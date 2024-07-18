@@ -40,6 +40,7 @@ public class DogController {
     @Operation(summary = "강아지 생성", description = "강아지를 생성합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "강아지 저장에 성공하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.SAVE_DOG))),
+            @ApiResponse(responseCode = "401", description = "토큰 정보가 유효하지 않습니다.", content = @Content(mediaType = "application/json", examples = {@ExampleObject(value = SwaggerExampleValue.UN_AUTHENTICATION_RESPONSE)})),
             @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
     @PostMapping
     public ResponseEntity<?> saveDog(@Valid @RequestBody RequestDogSaveDto dto, HttpServletRequest httpServletRequest) {
@@ -53,6 +54,7 @@ public class DogController {
     @Operation(summary = "강아지 리스트 조회", description = "강아지 리스트를 조회합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "강아지 리스트를 조회합니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.FIND_DOG_LIST))),
+            @ApiResponse(responseCode = "401", description = "토큰 정보가 유효하지 않습니다.", content = @Content(mediaType = "application/json", examples = {@ExampleObject(value = SwaggerExampleValue.UN_AUTHENTICATION_RESPONSE)})),
             @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
     @GetMapping
     public ResponseEntity<?> findUser(HttpServletRequest httpServletRequest) {
