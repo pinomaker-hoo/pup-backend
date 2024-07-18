@@ -56,7 +56,7 @@ public class WalkingTrailController {
         UserDetailDto userDetailDto = jwtTokenExtractor.extractUserId(httpServletRequest);
         List<WalkingTrailV0> response = walkingTrailService.findAllByUserId(userDetailDto.getUserId());
 
-        return CommonResponse.createResponse(HttpStatus.OK.value(), "산책로를 생성합니다.", response);
+        return CommonResponse.createResponse(HttpStatus.OK.value(), "나의 산책로 리스트를 조회합니다.", response);
     }
 
 
