@@ -31,6 +31,9 @@ public class SwaggerExampleValue {
     // ** GET : /api/v1/dog
     public static final String FIND_DOG_LIST = "{\"code\":200,\"status\":\"OK\",\"data\":[{\"dogId\":1,\"name\":\"뽀삐\",\"profile\":\"https://\",\"birth\":\"2021-01-01\",\"isNeutered\":false}],\"message\":\"강아지 리스트를 조회합니다.\"}";
 
+    // ** PATCH : /api/v1/walking-trail/expose
+    public static final String EXPOSE_WALKING_TRAIL = "{\"code\":200,\"status\":\"OK\",\"message\":\"산책로를 공개합니다.\"}";
+
     // ** POST : /api/v1/walking-trail
     public static final String SAVE_WALKING_TRAIL = "{\"code\":200,\"status\":\"OK\",\"data\":\"93e1ce84-4e96-468b-b21e-7622f9cc0e42\",\"message\":\"산책로를 생성합니다.\"}";
     public static final String NOT_FOUND_DOG_RESPONSE = "{\"code\":404,\"status\":\"NOT_FOUND\",\"message\":\"강아지를 찾을 수 없습니다.\"}";

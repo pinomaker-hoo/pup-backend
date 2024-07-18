@@ -50,8 +50,12 @@ public class WalkingTrail extends BaseTimeEntity {
     private OpenRangeEnum openRange;
 
     @Comment("활성화 여부")
-    @Column(nullable = true)
+    @Column(nullable = true, name = "is_enabled")
     private Boolean isEnabled = false;
+
+    @Comment("활성화 여부")
+    @Column(nullable = true, name = "is_exposed")
+    private Boolean isExposed = false;
 
     @OneToMany(mappedBy = "walkingTrail", cascade = CascadeType.REMOVE)
     private List<WalkingTrailItem> walkingTrailItemList;
@@ -102,5 +106,9 @@ public class WalkingTrail extends BaseTimeEntity {
         this.distance = distance;
         this.description = description;
         this.openRange = openRange;
+    }
+
+    public void toExpose() {
+        this.isExposed = true;
     }
 }
