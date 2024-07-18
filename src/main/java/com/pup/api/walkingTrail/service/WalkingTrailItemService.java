@@ -3,12 +3,13 @@ package com.pup.api.walkingTrail.service;
 import com.pup.api.walkingTrail.domain.WalkingTrail;
 import com.pup.api.walkingTrail.domain.WalkingTrailItem;
 import com.pup.api.walkingTrail.event.dto.Place;
-import com.pup.api.walkingTrail.event.dto.RequestWalkingTrailItemSaveDto;
+import com.pup.api.walkingTrail.event.dto.RequestWalkingTrailUpdateDto;
 import com.pup.api.walkingTrail.repository.WalkingTrailItemJpaRepository;
-import com.pup.api.walkingTrail.repository.WalkingTrailJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -19,8 +20,8 @@ public class WalkingTrailItemService {
     /**
      * 산책 아이템 저장
      */
-    public void saveWalkingTrialItem(WalkingTrail walkingTrail, RequestWalkingTrailItemSaveDto dto) {
-        for (Place place : dto.getPlaceList()) {
+    public void saveWalkingTrialItem(WalkingTrail walkingTrail, List<Place> placeList) {
+        for (Place place : placeList) {
             saveWalkingTrailItem(WalkingTrailItem.builder()
                     .walkingTrail(walkingTrail)
                     .lat(place.getLat())

@@ -28,6 +28,10 @@ public class WalkingTrail extends BaseTimeEntity {
     @Column(length = 50, nullable = true)
     private String name;
 
+    @Comment("설명")
+    @Column(length = 500, nullable = true)
+    private String description;
+
     @Comment("산책로 UID")
     @Column(nullable = false, name = "walking_trail_uid")
     private UUID walkingTrailUid;
@@ -44,14 +48,6 @@ public class WalkingTrail extends BaseTimeEntity {
     @Column(nullable = true, name = "open_range")
     @Enumerated(EnumType.STRING)
     private OpenRangeEnum openRange;
-
-    @Comment("리뷰")
-    @Column(length = 1000, nullable = true)
-    private String review;
-
-    @Comment("별점")
-    @Column(nullable = true)
-    private Integer rating;
 
     @Comment("활성화 여부")
     @Column(nullable = true)
@@ -99,7 +95,12 @@ public class WalkingTrail extends BaseTimeEntity {
                 .build();
     }
 
-    public void toEnable() {
+    public void toOver(String name, Integer time, Float distance, String description, OpenRangeEnum openRange) {
         this.isEnabled = true;
+        this.name = name;
+        this.time = time;
+        this.distance = distance;
+        this.description = description;
+        this.openRange = openRange;
     }
 }

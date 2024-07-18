@@ -3,6 +3,7 @@ package com.pup.api.walkingTrail.service;
 import com.pup.api.user.domain.User;
 import com.pup.api.walkingTrail.domain.WalkingTrail;
 import com.pup.api.walkingTrail.event.dto.RequestWalkingTrailSaveDto;
+import com.pup.api.walkingTrail.event.dto.RequestWalkingTrailUpdateDto;
 import com.pup.api.walkingTrail.repository.WalkingTrailJpaRepository;
 import com.pup.global.exception.BadRequestException;
 import com.pup.global.exception.NotFoundException;
@@ -48,8 +49,8 @@ public class WalkingTrailService {
     /**
      * 산책로 활성화
      */
-    public void walkingTrailToEnable(WalkingTrail walkingTrail) {
-        walkingTrail.toEnable();
+    public void walkingTrailToEnable(WalkingTrail walkingTrail, RequestWalkingTrailUpdateDto dto) {
+        walkingTrail.toOver(dto.getName(), dto.getTime(), dto.getDistance(), dto.getDescription(), dto.getOpenRange());
         walkingTrailJpaRepository.save(walkingTrail);
     }
 
