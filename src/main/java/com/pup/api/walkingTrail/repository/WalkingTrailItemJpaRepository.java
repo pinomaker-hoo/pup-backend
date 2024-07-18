@@ -4,5 +4,5 @@ import com.pup.api.walkingTrail.domain.WalkingTrail;
 import com.pup.api.walkingTrail.domain.WalkingTrailItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface WalkingTrailItemJpaRepository extends JpaRepository<WalkingTrailItem, Long> {
+public interface WalkingTrailItemJpaRepository extends JpaRepository<WalkingTrailItem, Long>, WalkingTrailItemJpaCustomRepository {
 }
