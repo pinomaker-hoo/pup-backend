@@ -7,6 +7,7 @@ import com.pup.api.walkingTrail.event.dto.RequestWalkingTrailDogUpdateDto;
 import com.pup.api.walkingTrail.event.dto.RequestWalkingTrailImageSaveDto;
 import com.pup.api.walkingTrail.event.dto.RequestWalkingTrailUpdateDto;
 import com.pup.api.walkingTrail.event.dto.RequestWalkingTrailSaveDto;
+import com.pup.api.walkingTrail.event.vo.WalkingTrailV0;
 import com.pup.api.walkingTrail.service.WalkingTrailDogService;
 import com.pup.api.walkingTrail.service.WalkingTrailImageService;
 import com.pup.api.walkingTrail.service.WalkingTrailItemService;
@@ -29,6 +30,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -43,6 +45,19 @@ public class WalkingTrailController {
     private final WalkingTrailImageService walkingTrailImageService;
     private final UserService userService;
     private final JwtTokenExtractor jwtTokenExtractor;
+
+    @Operation(summary = "나의 산책로 리스트 조회", description = "나의 산책로 리스트를 조회합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "산책로를 생성합니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.FIND_WALKING_LIST))),
+            @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
+    @GetMapping
+    public ResponseEntity<?> findWalkingTrailList(HttpServletRequest httpServletRequest) {
+        UserDetailDto userDetailDto = jwtTokenExtractor.extractUserId(httpServletRequest);
+        List<WalkingTrailV0> response = walkingTrailService.findAllByUserId(userDetailDto.getUserId());
+
+        return CommonResponse.createResponse(HttpStatus.OK.value(), "산책로를 생성합니다.", response);
+    }
+
 
     @Operation(summary = "산책로 생성", description = "산책로를 생성합니다.")
     @ApiResponses(value = {

@@ -21,7 +21,7 @@ public class WalkingTrailReview extends BaseTimeEntity {
 
     @Comment("별점")
     @Column(nullable = true)
-    private Integer rating;
+    private Float rating;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

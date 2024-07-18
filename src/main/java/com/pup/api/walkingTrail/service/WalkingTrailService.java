@@ -4,6 +4,7 @@ import com.pup.api.user.domain.User;
 import com.pup.api.walkingTrail.domain.WalkingTrail;
 import com.pup.api.walkingTrail.event.dto.RequestWalkingTrailSaveDto;
 import com.pup.api.walkingTrail.event.dto.RequestWalkingTrailUpdateDto;
+import com.pup.api.walkingTrail.event.vo.WalkingTrailV0;
 import com.pup.api.walkingTrail.repository.WalkingTrailJpaRepository;
 import com.pup.global.exception.BadRequestException;
 import com.pup.global.exception.NotFoundException;
@@ -12,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -67,5 +69,12 @@ public class WalkingTrailService {
      */
     public WalkingTrail findOne(UUID walkingTrailUid) {
         return walkingTrailJpaRepository.findWalkingTrailByWalkingTrailUid(walkingTrailUid).orElseThrow(() -> new NotFoundException("산책로를 찾을 수 없습니다."));
+    }
+
+    /**
+     * 산책로 리스트 조회
+     */
+    public List<WalkingTrailV0> findAllByUserId(Integer userId) {
+        return walkingTrailJpaRepository.findAllByUserId(userId);
     }
 }

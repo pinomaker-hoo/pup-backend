@@ -1,5 +1,6 @@
 package com.pup.api.walkingTrail.event.vo;
 
+import com.pup.global.enums.OpenRangeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -15,6 +16,7 @@ public class WalkingTrailV0 {
     private UUID walkingTrailUid;
     private Integer time;
     private Float distance;
-    private String openRange;
+    private OpenRangeEnum openRange;
     private LocalDateTime createdDate;
+    private Double rating;
 }
