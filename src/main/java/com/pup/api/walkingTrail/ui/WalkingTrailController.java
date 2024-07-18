@@ -60,7 +60,7 @@ public class WalkingTrailController {
 
     @Operation(summary = "산책로의 강아지 수정", description = "산책로의 강아지를 수정합니다.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "산책로의 강아지를 수정합니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.SAVE_WALKING_TRAIL))),
+            @ApiResponse(responseCode = "200", description = "산책로의 강아지를 수정합니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.UPDATE_WALKING_TRAIL_DOG))),
             @ApiResponse(responseCode = "404.1", description = "강아지를 찾을 수 없습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.NOT_FOUND_DOG_RESPONSE))),
             @ApiResponse(responseCode = "404.2", description = "산책로를 찾을 수 없습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.NOT_FOUND_WALKING_TRAIL))),
             @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})

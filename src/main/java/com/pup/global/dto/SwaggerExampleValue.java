@@ -32,7 +32,10 @@ public class SwaggerExampleValue {
     public static final String FIND_DOG_LIST = "{\"code\":200,\"status\":\"OK\",\"data\":[{\"dogId\":1,\"name\":\"뽀삐\",\"profile\":\"https://\",\"birth\":\"2021-01-01\",\"isNeutered\":false}],\"message\":\"강아지 리스트를 조회합니다.\"}";
 
     // ** PATCH : /api/v1/walking-trail/expose
-    public static final String EXPOSE_WALKING_TRAIL = "{\"code\":200,\"status\":\"OK\",\"message\":\"산책로를 공개합니다.\"}";
+    public static final String EXPOSE_WALKING_TRAIL = "{\"code\":200,\"s유tatus\":\"OK\",\"message\":\"산책로를 공개합니다.\"}";
+
+    // ** PATCH : /api/v1/walking-trail/dog
+    public static final String UPDATE_WALKING_TRAIL_DOG = "{\"code\":200,\"status\":\"OK\",\"message\":\"산책로의 강아지를 수정합니다.\"}";
 
     // ** POST : /api/v1/walking-trail
     public static final String SAVE_WALKING_TRAIL = "{\"code\":200,\"status\":\"OK\",\"data\":\"93e1ce84-4e96-468b-b21e-7622f9cc0e42\",\"message\":\"산책로를 생성합니다.\"}";
