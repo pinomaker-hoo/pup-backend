@@ -2,6 +2,7 @@ package com.pup.api.walkingTrail.service;
 
 import com.pup.api.walkingTrail.domain.WalkingTrail;
 import com.pup.api.walkingTrail.domain.WalkingTrailItem;
+import com.pup.api.walkingTrail.event.dto.Place;
 import com.pup.api.walkingTrail.event.dto.RequestWalkingTrailItemSaveDto;
 import com.pup.api.walkingTrail.repository.WalkingTrailItemJpaRepository;
 import com.pup.api.walkingTrail.repository.WalkingTrailJpaRepository;
@@ -19,11 +20,13 @@ public class WalkingTrailItemService {
      * 산책 아이템 저장
      */
     public void saveWalkingTrialItem(WalkingTrail walkingTrail, RequestWalkingTrailItemSaveDto dto) {
-        saveWalkingTrailItem(WalkingTrailItem.builder()
-                .walkingTrail(walkingTrail)
-                .lat(dto.getLat())
-                .lng(dto.getLng())
-                .build());
+        for (Place place : dto.getPlaceList()) {
+            saveWalkingTrailItem(WalkingTrailItem.builder()
+                    .walkingTrail(walkingTrail)
+                    .lat(place.getLat())
+                    .lng(place.getLng())
+                    .build());
+        }
     }
 
     /**

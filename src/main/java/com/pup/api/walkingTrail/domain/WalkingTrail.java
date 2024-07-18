@@ -53,6 +53,10 @@ public class WalkingTrail extends BaseTimeEntity {
     @Column(nullable = true)
     private Integer rating;
 
+    @Comment("활성화 여부")
+    @Column(nullable = true)
+    private Boolean isEnabled = false;
+
     @OneToMany(mappedBy = "walkingTrail", cascade = CascadeType.REMOVE)
     private List<WalkingTrailItem> walkingTrailItemList;
 
@@ -93,5 +97,9 @@ public class WalkingTrail extends BaseTimeEntity {
                 .lng(lng)
                 .path(path)
                 .build();
+    }
+
+    public void toEnable() {
+        this.isEnabled = true;
     }
 }

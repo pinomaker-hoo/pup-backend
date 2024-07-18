@@ -4,6 +4,7 @@ import com.pup.api.user.domain.User;
 import com.pup.api.walkingTrail.domain.WalkingTrail;
 import com.pup.api.walkingTrail.event.dto.RequestWalkingTrailSaveDto;
 import com.pup.api.walkingTrail.repository.WalkingTrailJpaRepository;
+import com.pup.global.exception.BadRequestException;
 import com.pup.global.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,23 @@ public class WalkingTrailService {
         walkingTrailDogService.saveWalkingTrailDogList(walkingTrail, dto.getDogIdList());
 
         return walkingTrail;
+    }
+
+    /**
+     * 산책로 활성화 검증
+     */
+    public void validationWalkingTrail(WalkingTrail walkingTrail) {
+        if (walkingTrail.getIsEnabled()) {
+            throw new BadRequestException("이미 활성화된 산책로입니다.");
+        }
+    }
+
+    /**
+     * 산책로 활성화
+     */
+    public void walkingTrailToEnable(WalkingTrail walkingTrail) {
+        walkingTrail.toEnable();
+        walkingTrailJpaRepository.save(walkingTrail);
     }
 
     /**

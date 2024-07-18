@@ -7,17 +7,16 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-import java.util.UUID;
-
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RequestWalkingTrailItemSaveDto {
-    @Schema(example = "11231231-23123123")
+public class Place {
+    @Schema(example = "12.12123123")
     @NotNull
-    private UUID walkingTrailUid;
+    private Float lat;
 
-    private List<Place> placeList;
+    @Schema(example = "12.12123123")
+    @NotNull
+    private Float lng;
 }
