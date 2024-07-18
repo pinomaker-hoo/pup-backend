@@ -35,4 +35,30 @@ public class WalkingTrailDogService {
         Dog dog = dogService.findOne(dogId);
         return walkingTrailDogJpaRepository.save(walkingTrail.toWalkingTrailDog(dog));
     }
+
+    /**
+     * 산책로에 강아지 변경
+     */
+    public void changeWalkingTrailDog(WalkingTrail walkingTrail, List<Long> dogIdList) {
+        List<WalkingTrailDog> walkingTrailDogList = findAll(walkingTrail.getWalkingTrailId());
+
+        for (WalkingTrailDog walkingTrailDog : walkingTrailDogList) {
+            if (dogIdList.contains(walkingTrailDog.getDog().getDogId())) {
+                dogIdList.remove(walkingTrailDog.getDog().getDogId());
+                continue;
+            }
+            walkingTrailDogJpaRepository.delete(walkingTrailDog);
+        }
+
+        for (Long dogId : dogIdList) {
+            saveWalkingTrailDog(walkingTrail, dogId);
+        }
+    }
+
+    /**
+     * 산책로에 강아지 조회
+     */
+    public List<WalkingTrailDog> findAll(Long walkingTrailId) {
+        return walkingTrailDogJpaRepository.findAllByWalkingTrailId(walkingTrailId);
+    }
 }
