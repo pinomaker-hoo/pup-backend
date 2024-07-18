@@ -135,4 +135,16 @@ public class WalkingTrailController {
 
         return CommonResponse.createResponseMessage(HttpStatus.OK.value(), "산책로 이미지를 생성합니다.");
     }
+
+    @Operation(summary = "산책로 삭제", description = "산책로를 삭제합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "산책로를 삭제합니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.DELETE_WALKING_TRAIL_LIST))),
+            @ApiResponse(responseCode = "401", description = "토큰 정보가 유효하지 않습니다.", content = @Content(mediaType = "application/json", examples = {@ExampleObject(value = SwaggerExampleValue.UN_AUTHENTICATION_RESPONSE)})),
+            @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
+    @DeleteMapping
+    public ResponseEntity<?> deleteWalkingTrailList(@RequestParam List<Long> walkingTrailIdList) {
+        walkingTrailService.deleteWalkingTrail(walkingTrailIdList);
+
+        return CommonResponse.createResponseMessage(HttpStatus.OK.value(), "산책로를 삭제합니다.");
+    }
 }

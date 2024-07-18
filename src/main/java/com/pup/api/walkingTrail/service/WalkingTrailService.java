@@ -72,6 +72,13 @@ public class WalkingTrailService {
     }
 
     /**
+     * 친구 삭제
+     */
+    public void deleteWalkingTrail(List<Long> walkingTrailIdList) {
+        walkingTrailJpaRepository.deleteWalkingTrail(walkingTrailIdList);
+    }
+
+    /**
      * 산책로 리스트 조회
      */
     public List<WalkingTrailV0> findAllByUserId(Integer userId) {

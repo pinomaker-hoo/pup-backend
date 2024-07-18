@@ -63,4 +63,7 @@ public class SwaggerExampleValue {
 
     // ** DELETE : /api/v1/friend
     public static final String DELETE_FRIEND_LIST = "{\"code\":200,\"status\":\"OK\",\"message\":\"친구를 삭제합니다.\"}";
+
+    // ** DELETE : /api/v1/walking-trail
+    public static final String DELETE_WALKING_TRAIL_LIST = "{\"code\":200,\"status\":\"OK\",\"message\":\"산책로를 삭제합니다.\"}";
 }
