@@ -114,12 +114,7 @@ public class WalkingTrailController {
         UserDetailDto userDetailDto = jwtTokenExtractor.extractUserId(httpServletRequest);
 
         WalkingTrail walkingTrail = walkingTrailService.findOne(UUID.fromString(walkingTrailUid));
-        log.info("walkingTrail : {}", walkingTrail);
-
         User user = userService.findOne(userDetailDto.getUserId());
-        log.info("user : {}", user);
-
-        log.info("HELLo");
 
         walkingTrailLikeService.saveWalkingTrailLike(user, walkingTrail, dto.getLike());
 

@@ -4,8 +4,6 @@ import com.pup.api.dog.event.dto.RequestDogSaveDto;
 import com.pup.api.dog.event.vo.DogV0;
 import com.pup.api.dog.service.DogService;
 import com.pup.api.user.domain.User;
-import com.pup.api.user.event.dto.RequestUserSaveDto;
-import com.pup.api.user.event.vo.UserV0;
 import com.pup.api.user.service.UserService;
 import com.pup.global.dto.CommonResponse;
 import com.pup.global.dto.SwaggerExampleValue;

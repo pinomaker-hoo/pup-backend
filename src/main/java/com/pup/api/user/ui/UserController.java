@@ -1,6 +1,5 @@
 package com.pup.api.user.ui;
 
-import com.pup.api.dog.event.dto.RequestDogSaveDto;
 import com.pup.api.user.domain.User;
 import com.pup.api.user.event.dto.RequestUserPasswordDto;
 import com.pup.api.user.event.dto.RequestUserUpdateDto;

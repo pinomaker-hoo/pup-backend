@@ -1,7 +1,6 @@
 package com.pup.api.user.repository;
 
 import com.pup.api.dog.domain.QDog;
-import com.pup.api.friend.event.vo.FriendV0;
 import com.pup.api.user.event.vo.UserV0;
 import com.pup.api.user.event.vo.UserV1;
 import com.querydsl.core.Tuple;

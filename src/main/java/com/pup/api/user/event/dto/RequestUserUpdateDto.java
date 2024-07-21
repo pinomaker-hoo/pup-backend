@@ -1,8 +1,5 @@
 package com.pup.api.user.event.dto;
 
-import com.pup.api.user.domain.User;
-import com.pup.api.user.domain.UserSocialTypeEnum;
-import com.pup.global.enums.OpenRangeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -10,8 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.UUID;
 
 @Getter
 @AllArgsConstructor

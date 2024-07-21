@@ -2,7 +2,6 @@ package com.pup.api.walkingTrail.domain;
 
 import com.pup.api.dog.domain.Dog;
 import com.pup.api.user.domain.User;
-import com.pup.api.walkingTrail.event.dto.RequestWalkingTrailSaveDto;
 import com.pup.global.domain.BaseTimeEntity;
 import com.pup.global.enums.OpenRangeEnum;
 import jakarta.persistence.*;

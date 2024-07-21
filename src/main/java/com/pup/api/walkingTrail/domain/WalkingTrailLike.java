@@ -4,7 +4,6 @@ import com.pup.api.user.domain.User;
 import com.pup.global.domain.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Comment;
 
 
 @Entity

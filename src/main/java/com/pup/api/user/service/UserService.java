@@ -20,7 +20,6 @@ import com.pup.global.jwt.JwtTokenValidator;
 import com.pup.global.utils.EncryptionUtils;
 
 import java.util.List;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Slf4j

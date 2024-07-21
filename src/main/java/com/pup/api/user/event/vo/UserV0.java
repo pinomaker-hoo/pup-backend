@@ -1,6 +1,5 @@
 package com.pup.api.user.event.vo;
 
-import com.pup.global.dto.TokenDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

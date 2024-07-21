@@ -3,7 +3,6 @@ package com.pup.api.walkingTrail.service;
 import com.pup.api.walkingTrail.domain.WalkingTrail;
 import com.pup.api.walkingTrail.domain.WalkingTrailItem;
 import com.pup.api.walkingTrail.event.dto.Place;
-import com.pup.api.walkingTrail.event.dto.RequestWalkingTrailUpdateDto;
 import com.pup.api.walkingTrail.repository.WalkingTrailItemJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

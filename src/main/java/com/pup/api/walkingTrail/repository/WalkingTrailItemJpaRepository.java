@@ -1,6 +1,5 @@
 package com.pup.api.walkingTrail.repository;
 
-import com.pup.api.walkingTrail.domain.WalkingTrail;
 import com.pup.api.walkingTrail.domain.WalkingTrailItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,6 +1,5 @@
 package com.pup.api.friend.ui;
 
-import com.pup.api.dog.event.dto.RequestDogSaveDto;
 import com.pup.api.friend.event.dto.RequestFriendSaveDto;
 import com.pup.api.friend.event.vo.FriendV0;
 import com.pup.api.friend.service.FriendService;
