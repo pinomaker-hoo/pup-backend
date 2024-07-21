@@ -3,13 +3,17 @@ package com.pup.api.walkingTrail.service;
 import com.pup.api.user.domain.User;
 import com.pup.api.walkingTrail.domain.WalkingTrail;
 import com.pup.api.walkingTrail.domain.WalkingTrailLike;
+import com.pup.api.walkingTrail.event.vo.WalkingTrailV2;
 import com.pup.api.walkingTrail.repository.WalkingTrailLikeJpaRepository;
+import com.pup.global.enums.WalkingTrailSearchTypeEnum;
 import com.pup.global.exception.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -49,5 +53,26 @@ public class WalkingTrailLikeService {
      */
     public Boolean existByUserAndWalkingTrail(Integer userId, UUID walkingTrailUid) {
         return walkingTrailLikeJpaRepository.existByUserAndWalkingTrail(userId, walkingTrailUid);
+    }
+
+    /**
+     * 사용자가 좋아요를 누른 산책로 목록 조회
+     */
+    public List<WalkingTrailV2> findWalkingTrailLikeByUserId(Integer userId, WalkingTrailSearchTypeEnum type) {
+        List<WalkingTrailV2> list = walkingTrailLikeJpaRepository.findWalkingTrailLikeByUserId(userId, type);
+
+        if (type == WalkingTrailSearchTypeEnum.POPULAR) {
+            return list.stream()
+                    .sorted((a, b) -> Long.compare(b.getReviewCount(), a.getReviewCount()))
+                    .collect(Collectors.toList());
+        }
+
+        if (type == WalkingTrailSearchTypeEnum.FAMOUS) {
+            return list.stream()
+                    .sorted((a, b) -> Long.compare(b.getReviewCount(), a.getReviewCount()))
+                    .collect(Collectors.toList());
+        }
+
+        return list;
     }
 }

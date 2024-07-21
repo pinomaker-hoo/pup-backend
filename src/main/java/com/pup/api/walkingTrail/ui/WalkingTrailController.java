@@ -7,6 +7,7 @@ import com.pup.api.walkingTrail.event.dto.*;
 import com.pup.api.walkingTrail.event.vo.WalkingTrailV0;
 import com.pup.api.walkingTrail.event.vo.WalkingTrailV1;
 import com.pup.api.walkingTrail.event.vo.WalkingTrailV1Response;
+import com.pup.api.walkingTrail.event.vo.WalkingTrailV2;
 import com.pup.api.walkingTrail.service.*;
 import com.pup.global.dto.CommonResponse;
 import com.pup.global.dto.SwaggerExampleValue;
@@ -55,6 +56,20 @@ public class WalkingTrailController {
         List<WalkingTrailV0> response = walkingTrailService.findAllByUserId(userDetailDto.getUserId());
 
         return CommonResponse.createResponse(HttpStatus.OK.value(), "나의 산책로 리스트를 조회합니다.", response);
+    }
+
+    @Operation(summary = "찜한 산책로 리스트 조회", description = "찜한 산책로 리스트를 조회합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "찜한 산책로 리스트를 조회합니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.FIND_LIKE_WALKING_LIST))),
+            @ApiResponse(responseCode = "401", description = "토큰 정보가 유효하지 않습니다.", content = @Content(mediaType = "application/json", examples = {@ExampleObject(value = SwaggerExampleValue.UN_AUTHENTICATION_RESPONSE)})),
+            @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
+    @GetMapping("/like")
+    public ResponseEntity<?> findLikeWalkingTrailList(HttpServletRequest httpServletRequest,
+                                                      @RequestParam(value = "type", required = true) WalkingTrailSearchTypeEnum type) {
+        UserDetailDto userDetailDto = jwtTokenExtractor.extractUserId(httpServletRequest);
+        List<WalkingTrailV2> response = walkingTrailLikeService.findWalkingTrailLikeByUserId(userDetailDto.getUserId(), type);
+
+        return CommonResponse.createResponse(HttpStatus.OK.value(), "찜한 산책로 리스트를 조회합니다.", response);
     }
 
     @Operation(summary = "산책로 리스트 조회", description = "산책로 리스트를 조회합니다.")
