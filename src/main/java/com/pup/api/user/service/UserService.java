@@ -5,6 +5,7 @@ import com.pup.api.friend.service.FriendService;
 import com.pup.api.user.domain.User;
 import com.pup.api.user.event.dto.RequestUserUpdateDto;
 import com.pup.api.user.event.vo.UserV0;
+import com.pup.api.user.event.vo.UserV0Response;
 import com.pup.api.user.event.vo.UserV1;
 import com.pup.api.user.repository.UserJpaRepository;
 import lombok.RequiredArgsConstructor;
@@ -122,6 +123,25 @@ public class UserService {
         }
 
         return user;
+    }
+
+    /**
+     * 사용자 조회
+     */
+    public UserV0Response findUserV0Response(Integer userId, Integer targetUserId) {
+        UserV0 user = userJpaRepository.findUserByUserId(targetUserId);
+
+        if (user == null) {
+            throw new NotFoundException("존재하지 않는 사용자 입니다.");
+        }
+
+        List<FriendV1> friendList = friendService.findFriendList(userId);
+        Boolean isFriend = friendList.stream().anyMatch(friend -> friend.getFriendUserId().equals(targetUserId));
+
+        return UserV0Response.builder()
+                .userV0(user)
+                .isFriend(isFriend)
+                .build();
     }
 
     /**
