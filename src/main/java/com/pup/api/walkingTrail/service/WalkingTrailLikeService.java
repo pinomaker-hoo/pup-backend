@@ -47,7 +47,7 @@ public class WalkingTrailLikeService {
     /**
      * 사용자가 해당 산책로에 좋아요를 눌렀는지 확인
      */
-    private Boolean existByUserAndWalkingTrail(Integer userId, UUID walkingTrailUid) {
+    public Boolean existByUserAndWalkingTrail(Integer userId, UUID walkingTrailUid) {
         return walkingTrailLikeJpaRepository.existByUserAndWalkingTrail(userId, walkingTrailUid);
     }
 }

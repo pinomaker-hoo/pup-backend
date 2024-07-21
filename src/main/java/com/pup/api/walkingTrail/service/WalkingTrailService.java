@@ -8,6 +8,7 @@ import com.pup.api.walkingTrail.event.dto.RequestWalkingTrailSaveDto;
 import com.pup.api.walkingTrail.event.dto.RequestWalkingTrailUpdateDto;
 import com.pup.api.walkingTrail.event.vo.WalkingTrailV0;
 import com.pup.api.walkingTrail.event.vo.WalkingTrailV1;
+import com.pup.api.walkingTrail.event.vo.WalkingTrailV1Response;
 import com.pup.api.walkingTrail.repository.WalkingTrailJpaRepository;
 import com.pup.global.enums.OpenRangeEnum;
 import com.pup.global.enums.WalkingTrailSearchTypeEnum;
@@ -29,6 +30,7 @@ public class WalkingTrailService {
     private final WalkingTrailJpaRepository walkingTrailJpaRepository;
     private final WalkingTrailItemService walkingTrailItemService;
     private final WalkingTrailDogService walkingTrailDogService;
+    private final WalkingTrailLikeService walkingTrailLikeService;
     private final FriendService friendService;
 
     /**
@@ -92,11 +94,11 @@ public class WalkingTrailService {
         return walkingTrailJpaRepository.findAllByUserId(userId);
     }
 
-    public List<WalkingTrailV1> search(Integer userId, String word, WalkingTrailSearchTypeEnum type) {
+    public List<WalkingTrailV1Response> search(Integer userId, String word, WalkingTrailSearchTypeEnum type) {
         List<WalkingTrailV1> list = findAll(word, userId, type);
         List<FriendV1> friendList = friendService.findFriendList(userId);
 
-        List<WalkingTrailV1> filterList = list.stream().filter(
+        List<WalkingTrailV1Response> filterList = list.stream().filter(
                 item -> {
                     if (item.getOpenRange().equals(OpenRangeEnum.PUBLIC)) {
                         return true;
@@ -108,7 +110,11 @@ public class WalkingTrailService {
 
                     return friendList.stream().anyMatch(friend -> friend.getUserId().equals(item.getUserId()));
                 }
-        ).toList();
+        ).map(item -> {
+            Boolean isLike = walkingTrailLikeService.existByUserAndWalkingTrail(userId, item.getWalkingTrailUid());
+            return item.toResponse(isLike);
+        }).toList();
+
 
         if (type == WalkingTrailSearchTypeEnum.POPULAR) {
             return filterList.stream()
@@ -116,11 +122,11 @@ public class WalkingTrailService {
                     .collect(Collectors.toList());
         }
 
-//        if (type == WalkingTrailSearchTypeEnum.FAMOUS) {
-//            return filterList.stream()
-//                    .sorted((a, b) -> Long.compare(b.getRating(), a.getRating()))
-//                    .collect(Collectors.toList());
-//        }
+        if (type == WalkingTrailSearchTypeEnum.FAMOUS) {
+            return filterList.stream()
+                    .sorted((a, b) -> Long.compare(b.getReviewCount(), a.getReviewCount()))
+                    .collect(Collectors.toList());
+        }
 
         return filterList;
     }

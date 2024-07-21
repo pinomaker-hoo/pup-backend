@@ -1,6 +1,7 @@
 package com.pup.api.walkingTrail.repository;
 
 import com.pup.api.walkingTrail.domain.QWalkingTrail;
+import com.pup.api.walkingTrail.domain.QWalkingTrailLike;
 import com.pup.api.walkingTrail.domain.QWalkingTrailReview;
 import com.pup.api.walkingTrail.event.vo.WalkingTrailV0;
 import com.pup.api.walkingTrail.event.vo.WalkingTrailV1;
@@ -50,6 +51,7 @@ public class WalkingTrailJpaCustomRepositoryImpl implements WalkingTrailJpaCusto
     public List<WalkingTrailV1> findAllByWord(String word, Integer userId, WalkingTrailSearchTypeEnum searchType) {
         QWalkingTrail wt = QWalkingTrail.walkingTrail;
         QWalkingTrailReview wtr = QWalkingTrailReview.walkingTrailReview;
+        QWalkingTrailLike wtl = QWalkingTrailLike.walkingTrailLike;
 
         JPAQuery<WalkingTrailV1> query = queryFactory.select(
                         Projections.constructor(WalkingTrailV1.class,
@@ -69,7 +71,11 @@ public class WalkingTrailJpaCustomRepositoryImpl implements WalkingTrailJpaCusto
                                 JPAExpressions
                                         .select(wtr.count())
                                         .from(wtr)
-                                        .where(wtr.walkingTrail.walkingTrailId.eq(wt.walkingTrailId))
+                                        .where(wtr.walkingTrail.walkingTrailId.eq(wt.walkingTrailId)),
+                                JPAExpressions
+                                        .select(wtl.count())
+                                        .from(wtl)
+                                        .where(wtl.walkingTrail.walkingTrailId.eq(wt.walkingTrailId))
                         ))
                 .from(wt)
                 .where(wt.isEnabled.eq(true).and(wt.isExposed.eq(true).and(wt.user.userId.ne(userId))));

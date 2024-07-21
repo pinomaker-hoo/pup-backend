@@ -23,4 +23,9 @@ public class WalkingTrailV1 {
     private Double rating;
     private Integer userId;
     private long reviewCount;
+    private long likeCount;
+
+    public WalkingTrailV1Response toResponse(Boolean isLike) {
+        return WalkingTrailV1Response.builder().walkingTrailV1(this).isLike(isLike).build();
+    }
 }
