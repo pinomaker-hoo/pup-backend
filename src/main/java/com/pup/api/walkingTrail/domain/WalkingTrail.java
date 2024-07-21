@@ -66,6 +66,9 @@ public class WalkingTrail extends BaseTimeEntity {
     @OneToMany(mappedBy = "walkingTrail", cascade = CascadeType.REMOVE)
     private List<WalkingTrailReview> walkingTrailReviewList;
 
+    @OneToMany(mappedBy = "walkingTrail", cascade = CascadeType.REMOVE)
+    private List<WalkingTrailLike> walkingTrailLikeList;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

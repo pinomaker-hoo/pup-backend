@@ -3,6 +3,7 @@ package com.pup.api.user.domain;
 import com.pup.api.dog.domain.Dog;
 import com.pup.api.friend.domain.Friend;
 import com.pup.api.walkingTrail.domain.WalkingTrail;
+import com.pup.api.walkingTrail.domain.WalkingTrailLike;
 import com.pup.global.enums.OpenRangeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -81,6 +82,9 @@ public class User extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<WalkingTrail> walkingTrailList;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<WalkingTrailLike> walkingTrailLikeList;
 
     public void changeUser(String profile, String description) {
         this.profile = profile;
