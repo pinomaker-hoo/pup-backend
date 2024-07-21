@@ -1,8 +1,11 @@
 package com.pup.api.user.service;
 
+import com.pup.api.friend.event.vo.FriendV1;
+import com.pup.api.friend.service.FriendService;
 import com.pup.api.user.domain.User;
 import com.pup.api.user.event.dto.RequestUserUpdateDto;
 import com.pup.api.user.event.vo.UserV0;
+import com.pup.api.user.event.vo.UserV1;
 import com.pup.api.user.repository.UserJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,12 +19,16 @@ import com.pup.global.jwt.JwtTokenProvider;
 import com.pup.global.jwt.JwtTokenValidator;
 import com.pup.global.utils.EncryptionUtils;
 
+import java.util.List;
+import java.util.UUID;
+
 @RequiredArgsConstructor
 @Slf4j
 @Service
 public class UserService {
     private final UserJpaRepository userJpaRepository;
     private final PasswordEncoder passwordEncoder;
+    private final FriendService friendService;
     private final JwtTokenProvider jwtTokenProvider;
     private final JwtTokenValidator jwtTokenValidator;
     private final EncryptionUtils encryptionUtils;
@@ -40,6 +47,20 @@ public class UserService {
     public void updatePassword(User user, String password) {
         user.changePassword(passwordEncoder.encode(password));
         userJpaRepository.save(user);
+    }
+
+    /**
+     * 추가할 사용자 조회
+     */
+    public List<UserV1> findUserList(Integer userId, String userUid) {
+        List<FriendV1> friendList = friendService.findFriendList(userId);
+        List<UserV1> list = userJpaRepository.findUserList(userId);
+
+        List<UserV1> filterList = list.stream().filter(item ->
+                friendList.stream().noneMatch(friend -> friend.getFriendUserId().equals(item.getUserId()))
+        ).toList();
+
+        return filterList;
     }
 
     /**

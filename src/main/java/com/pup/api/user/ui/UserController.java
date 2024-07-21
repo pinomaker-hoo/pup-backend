@@ -5,6 +5,7 @@ import com.pup.api.user.domain.User;
 import com.pup.api.user.event.dto.RequestUserPasswordDto;
 import com.pup.api.user.event.dto.RequestUserUpdateDto;
 import com.pup.api.user.event.vo.UserV0;
+import com.pup.api.user.event.vo.UserV1;
 import com.pup.api.user.service.UserService;
 import com.pup.global.dto.CommonResponse;
 import com.pup.global.dto.SwaggerExampleValue;
@@ -23,6 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -46,6 +49,21 @@ public class UserController {
 
         return CommonResponse.createResponse(HttpStatus.OK.value(), "유저 정보를 조회합니다.", user);
     }
+
+    @Operation(summary = "친구 대상 조회", description = "친구 대상 리스트를 조회합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "친구 대상 리스트를 조회합니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.FIND_USER_LIST))),
+            @ApiResponse(responseCode = "401", description = "토큰 정보가 유효하지 않습니다.", content = @Content(mediaType = "application/json", examples = {@ExampleObject(value = SwaggerExampleValue.UN_AUTHENTICATION_RESPONSE)})),
+            @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
+    @GetMapping("/search")
+    public ResponseEntity<?> findUserList(HttpServletRequest httpServletRequest, @RequestParam(value = "uid", required = false) String uid) {
+        UserDetailDto userDetailDto = jwtTokenExtractor.extractUserId(httpServletRequest);
+        List<UserV1> userList = userService.findUserList(userDetailDto.getUserId(), uid);
+
+
+        return CommonResponse.createResponse(HttpStatus.OK.value(), "친구 대상 리스트를 조회합니다.", userList);
+    }
+
 
     @Operation(summary = "유저 정보 수정", description = "유저 정보를 수정합니다.")
     @ApiResponses(value = {

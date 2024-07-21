@@ -19,6 +19,9 @@ public class SwaggerExampleValue {
     // ** GET : /api/v1/user
     public static final String FIND_USER = "{\"code\": 200, \"status\": \"OK\", \"data\": {\"userId\": 4, \"email\": \"test@test.com\", \"nickname\": \"\", \"userUid\": \"7b4e6ef6-c29b-4c58-9787-7fcae9a7babb\", \"profile\": \"https://123.png\", \"description\": \"안녕하세요. 저는 000 입니다.\"}, \"message\": \"유저 정보를 조회합니다.\"}";
 
+    // ** GET : /api/v1/user/search
+    public static final String FIND_USER_LIST = "{\"code\":200,\"status\":\"OK\",\"data\":[{\"userId\":6,\"userUid\":\"b758c502-049e-42ab-ac19-95b9f7524e59\",\"nickname\":\"\",\"profile\":\"\",\"dogProfileList\":[\"https://\"]},{\"userId\":7,\"userUid\":\"66d33aab-674d-4dc4-98aa-01ceeadd0989\",\"nickname\":\"\",\"profile\":\"\",\"dogProfileList\":[]}],\"message\":\"유저 정보를 조회합니다.\"}";
+
     // ** PUT : /api/v1/user
     public static final String UPDATE_USER = "{\"code\": 200, \"status\": \"OK\", \"message\": \"유저 정보를 수정합니다.\"}";
 
