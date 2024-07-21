@@ -49,15 +49,27 @@ public class DogController {
         return CommonResponse.createResponseMessage(HttpStatus.OK.value(), "강아지 저장에 성공 했습니다.");
     }
 
+    @Operation(summary = "나의 강아지 리스트 조회", description = "나의 강아지 리스트를 조회합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "나의 강아지 리스트를 조회합니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.FIND_DOG_LIST))),
+            @ApiResponse(responseCode = "401", description = "토큰 정보가 유효하지 않습니다.", content = @Content(mediaType = "application/json", examples = {@ExampleObject(value = SwaggerExampleValue.UN_AUTHENTICATION_RESPONSE)})),
+            @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
+    @GetMapping
+    public ResponseEntity<?> findMyDogList(HttpServletRequest httpServletRequest) {
+        UserDetailDto userDetailDto = jwtTokenExtractor.extractUserId(httpServletRequest);
+        List<DogV0> response = dogService.findDogListByUserId(userDetailDto.getUserId());
+
+        return CommonResponse.createResponse(HttpStatus.OK.value(), "강아지 리스트를 조회합니다.", response);
+    }
+
     @Operation(summary = "강아지 리스트 조회", description = "강아지 리스트를 조회합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "강아지 리스트를 조회합니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.FIND_DOG_LIST))),
             @ApiResponse(responseCode = "401", description = "토큰 정보가 유효하지 않습니다.", content = @Content(mediaType = "application/json", examples = {@ExampleObject(value = SwaggerExampleValue.UN_AUTHENTICATION_RESPONSE)})),
             @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
-    @GetMapping
-    public ResponseEntity<?> findUser(HttpServletRequest httpServletRequest) {
-        UserDetailDto userDetailDto = jwtTokenExtractor.extractUserId(httpServletRequest);
-        List<DogV0> response = dogService.findDogListByUserId(userDetailDto.getUserId());
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> findDogList(@PathVariable("userId") Integer userId) {
+        List<DogV0> response = dogService.findDogListByUserId(userId);
 
         return CommonResponse.createResponse(HttpStatus.OK.value(), "강아지 리스트를 조회합니다.", response);
     }
