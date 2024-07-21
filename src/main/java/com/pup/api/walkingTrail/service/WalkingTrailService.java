@@ -1,11 +1,16 @@
 package com.pup.api.walkingTrail.service;
 
+import com.pup.api.friend.event.vo.FriendV1;
+import com.pup.api.friend.service.FriendService;
 import com.pup.api.user.domain.User;
 import com.pup.api.walkingTrail.domain.WalkingTrail;
 import com.pup.api.walkingTrail.event.dto.RequestWalkingTrailSaveDto;
 import com.pup.api.walkingTrail.event.dto.RequestWalkingTrailUpdateDto;
 import com.pup.api.walkingTrail.event.vo.WalkingTrailV0;
+import com.pup.api.walkingTrail.event.vo.WalkingTrailV1;
 import com.pup.api.walkingTrail.repository.WalkingTrailJpaRepository;
+import com.pup.global.enums.OpenRangeEnum;
+import com.pup.global.enums.WalkingTrailSearchTypeEnum;
 import com.pup.global.exception.BadRequestException;
 import com.pup.global.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +29,7 @@ public class WalkingTrailService {
     private final WalkingTrailJpaRepository walkingTrailJpaRepository;
     private final WalkingTrailItemService walkingTrailItemService;
     private final WalkingTrailDogService walkingTrailDogService;
+    private final FriendService friendService;
 
     /**
      * 산책로 최초 저장
@@ -83,5 +90,39 @@ public class WalkingTrailService {
      */
     public List<WalkingTrailV0> findAllByUserId(Integer userId) {
         return walkingTrailJpaRepository.findAllByUserId(userId);
+    }
+
+    public List<WalkingTrailV1> search(Integer userId, String word, WalkingTrailSearchTypeEnum type) {
+        List<WalkingTrailV1> list = findAll(word, userId);
+        List<FriendV1> friendList = friendService.findFriendList(userId);
+
+        List<WalkingTrailV1> filterList = list.stream().filter(
+                item -> {
+                    if (item.getOpenRange().equals(OpenRangeEnum.PUBLIC)) {
+                        return true;
+                    }
+
+                    if (item.getOpenRange().equals(OpenRangeEnum.PRIVATE)) {
+                        return false;
+                    }
+
+                    return friendList.stream().anyMatch(friend -> friend.getUserId().equals(item.getUserId()));
+                }
+        ).toList();
+
+        if (type == WalkingTrailSearchTypeEnum.POPULAR) {
+            return filterList.stream()
+                    .sorted((a, b) -> Long.compare(b.getReviewCount(), a.getReviewCount()))
+                    .collect(Collectors.toList());
+        }
+
+        return filterList;
+    }
+
+    /**
+     * 산책로 리스트 조회
+     */
+    public List<WalkingTrailV1> findAll(String word, Integer userId) {
+        return walkingTrailJpaRepository.findAllByWord(word, userId);
     }
 }

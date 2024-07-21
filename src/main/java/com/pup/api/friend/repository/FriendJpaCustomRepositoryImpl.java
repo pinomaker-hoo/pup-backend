@@ -4,6 +4,7 @@ package com.pup.api.friend.repository;
 import com.pup.api.dog.domain.QDog;
 import com.pup.api.friend.domain.QFriend;
 import com.pup.api.friend.event.vo.FriendV0;
+import com.pup.api.friend.event.vo.FriendV1;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
@@ -81,5 +82,21 @@ public class FriendJpaCustomRepositoryImpl implements FriendJpaCustomRepository 
         });
 
         return new ArrayList<>(friendMap.values());
+    }
+
+    @Override
+    public List<FriendV1> findFriendListV1(Integer userId) {
+        QFriend f = QFriend.friend1;
+
+        return queryFactory.select(
+                        Projections.constructor(
+                                FriendV1.class,
+                                f.friendId,
+                                f.user.userId,
+                                f.friend.userId
+                        ))
+                .from(f)
+                .where(f.user.userId.eq(userId))
+                .fetch();
     }
 }

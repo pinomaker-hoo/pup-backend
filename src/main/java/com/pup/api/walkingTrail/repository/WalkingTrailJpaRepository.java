@@ -1,6 +1,7 @@
 package com.pup.api.walkingTrail.repository;
 
 import com.pup.api.walkingTrail.domain.WalkingTrail;
+import com.pup.api.walkingTrail.domain.WalkingTrailDog;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -17,4 +18,7 @@ public interface WalkingTrailJpaRepository extends JpaRepository<WalkingTrail, L
     @Transactional(rollbackFor = {Exception.class})
     @Query("DELETE WalkingTrail wt WHERE wt.walkingTrailId IN(:walkingTrailIdList)")
     int deleteWalkingTrail(List<Long> walkingTrailIdList);
+
+    @Query("SELECT wt FROM WalkingTrail wt JOIN FETCH wt.user")
+    List<WalkingTrail> findAllWithUser();
 }

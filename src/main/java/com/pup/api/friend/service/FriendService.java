@@ -2,6 +2,7 @@ package com.pup.api.friend.service;
 
 import com.pup.api.friend.domain.Friend;
 import com.pup.api.friend.event.vo.FriendV0;
+import com.pup.api.friend.event.vo.FriendV1;
 import com.pup.api.friend.repository.FriendJpaRepository;
 import com.pup.api.user.domain.User;
 import com.pup.global.exception.BadRequestException;
@@ -35,6 +36,13 @@ public class FriendService {
      */
     public List<FriendV0> findFriendList(Integer userId, String name) {
         return friendJpaRepository.findFriendList(userId, name);
+    }
+
+    /**
+     * 친구 간단 리스트 조회
+     */
+    public List<FriendV1> findFriendList(Integer userId) {
+        return friendJpaRepository.findFriendListV1(userId);
     }
 
     /**
