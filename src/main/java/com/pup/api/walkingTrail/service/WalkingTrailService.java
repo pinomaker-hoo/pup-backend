@@ -93,7 +93,7 @@ public class WalkingTrailService {
     }
 
     public List<WalkingTrailV1> search(Integer userId, String word, WalkingTrailSearchTypeEnum type) {
-        List<WalkingTrailV1> list = findAll(word, userId);
+        List<WalkingTrailV1> list = findAll(word, userId, type);
         List<FriendV1> friendList = friendService.findFriendList(userId);
 
         List<WalkingTrailV1> filterList = list.stream().filter(
@@ -116,13 +116,19 @@ public class WalkingTrailService {
                     .collect(Collectors.toList());
         }
 
+//        if (type == WalkingTrailSearchTypeEnum.FAMOUS) {
+//            return filterList.stream()
+//                    .sorted((a, b) -> Long.compare(b.getRating(), a.getRating()))
+//                    .collect(Collectors.toList());
+//        }
+
         return filterList;
     }
 
     /**
      * 산책로 리스트 조회
      */
-    public List<WalkingTrailV1> findAll(String word, Integer userId) {
-        return walkingTrailJpaRepository.findAllByWord(word, userId);
+    public List<WalkingTrailV1> findAll(String word, Integer userId, WalkingTrailSearchTypeEnum searchType) {
+        return walkingTrailJpaRepository.findAllByWord(word, userId, searchType);
     }
 }

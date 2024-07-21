@@ -44,6 +44,11 @@ public class SwaggerExampleValue {
     public static final String SAVE_WALKING_TRAIL = "{\"code\":200,\"status\":\"OK\",\"data\":\"93e1ce84-4e96-468b-b21e-7622f9cc0e42\",\"message\":\"산책로를 생성합니다.\"}";
     public static final String NOT_FOUND_DOG_RESPONSE = "{\"code\":404,\"status\":\"NOT_FOUND\",\"message\":\"강아지를 찾을 수 없습니다.\"}";
 
+    // ** PATCH : /api/v1/walking-trail/like/{}
+    public static final String SAVE_WALKING_TRAIL_LIKE = "{\"code\":200,\"status\":\"OK\",\"message\":\"산책로에 좋아요를 누르거나 취소합니다.\"}";
+    public static final String NOT_FOUND_WALKING_TRAIL_LIKE = "{\"code\":404,\"status\":\"NOT_FOUND\",\"message\":\"좋아요를 누르지 않았습니다.\"}";
+    public static final String EXISTED_WALKING_TRAIL_LIKE = "{\"code\":400,\"status\":\"BAD_REQUEST\",\"message\":\"이미 좋아요를 누르셨습니다.\"}";
+
     // ** GET : /api/v1/walking-trail
     public static final String FIND_WALKING_LIST = "{\"code\":200,\"status\":\"OK\",\"data\":[{\"walkingTrailId\":4,\"name\":null,\"description\":null,\"walkingTrailUid\":\"93e1ce84-4e96-468b-b21e-7622f9cc0e42\",\"time\":0,\"distance\":0,\"openRange\":null,\"createdDate\":\"2024-07-18T00:40:02.808216\",\"rating\":2},{\"walkingTrailId\":4,\"name\":null,\"description\":null,\"walkingTrailUid\":\"93e1ce84-4e96-468b-b21e-7622f9cc0e42\",\"time\":0,\"distance\":0,\"openRange\":null,\"createdDate\":\"2024-07-18T00:40:02.808216\",\"rating\":2},{\"walkingTrailId\":4,\"name\":null,\"description\":null,\"walkingTrailUid\":\"93e1ce84-4e96-468b-b21e-7622f9cc0e42\",\"time\":0,\"distance\":0,\"openRange\":null,\"createdDate\":\"2024-07-18T00:40:02.808216\",\"rating\":2},{\"walkingTrailId\":5,\"name\":null,\"description\":null,\"walkingTrailUid\":\"4c91be7c-e85b-4a1f-82bc-4221a9de0ccd\",\"time\":0,\"distance\":0,\"openRange\":null,\"createdDate\":\"2024-07-18T16:44:05.83383\",\"rating\":null},{\"walkingTrailId\":6,\"name\":\"서울시 어쩌구\",\"description\":\"해당 산책에 대한 기록을 저장합니다.\",\"walkingTrailUid\":\"aeeae8d7-ba6f-4562-af18-3a3943486547\",\"time\":120,\"distance\":0,\"openRange\":\"PROTECTED\",\"createdDate\":\"2024-07-18T20:38:27.783936\",\"rating\":null}],\"message\":\"나의 산책로 리스트를 조회합니다.\"}";
 

@@ -4,6 +4,7 @@ import com.pup.api.walkingTrail.domain.QWalkingTrail;
 import com.pup.api.walkingTrail.domain.QWalkingTrailReview;
 import com.pup.api.walkingTrail.event.vo.WalkingTrailV0;
 import com.pup.api.walkingTrail.event.vo.WalkingTrailV1;
+import com.pup.global.enums.WalkingTrailSearchTypeEnum;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -11,6 +12,9 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+
+import static com.pup.global.enums.WalkingTrailSearchTypeEnum.OLDEST;
+import static com.pup.global.enums.WalkingTrailSearchTypeEnum.RECENT;
 
 @RequiredArgsConstructor
 public class WalkingTrailJpaCustomRepositoryImpl implements WalkingTrailJpaCustomRepository {
@@ -43,7 +47,7 @@ public class WalkingTrailJpaCustomRepositoryImpl implements WalkingTrailJpaCusto
     }
 
     @Override
-    public List<WalkingTrailV1> findAllByWord(String word, Integer userId) {
+    public List<WalkingTrailV1> findAllByWord(String word, Integer userId, WalkingTrailSearchTypeEnum searchType) {
         QWalkingTrail wt = QWalkingTrail.walkingTrail;
         QWalkingTrailReview wtr = QWalkingTrailReview.walkingTrailReview;
 
@@ -68,11 +72,18 @@ public class WalkingTrailJpaCustomRepositoryImpl implements WalkingTrailJpaCusto
                                         .where(wtr.walkingTrail.walkingTrailId.eq(wt.walkingTrailId))
                         ))
                 .from(wt)
-                .where(wt.isEnabled.eq(true).and(wt.isExposed.eq(true).and(wt.user.userId.ne(userId))))
-                .orderBy(wt.createdDate.desc());
+                .where(wt.isEnabled.eq(true).and(wt.isExposed.eq(true).and(wt.user.userId.ne(userId))));
 
         if (word != null) {
             query.where(wt.name.contains(word));
+        }
+
+        if (searchType == RECENT) {
+            query.orderBy(wt.createdDate.desc());
+        }
+
+        if (searchType == OLDEST) {
+            query.orderBy(wt.createdDate.asc());
         }
 
         return query.fetch();

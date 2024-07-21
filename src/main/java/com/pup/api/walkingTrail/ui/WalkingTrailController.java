@@ -3,16 +3,10 @@ package com.pup.api.walkingTrail.ui;
 import com.pup.api.user.domain.User;
 import com.pup.api.user.service.UserService;
 import com.pup.api.walkingTrail.domain.WalkingTrail;
-import com.pup.api.walkingTrail.event.dto.RequestWalkingTrailDogUpdateDto;
-import com.pup.api.walkingTrail.event.dto.RequestWalkingTrailImageSaveDto;
-import com.pup.api.walkingTrail.event.dto.RequestWalkingTrailUpdateDto;
-import com.pup.api.walkingTrail.event.dto.RequestWalkingTrailSaveDto;
+import com.pup.api.walkingTrail.event.dto.*;
 import com.pup.api.walkingTrail.event.vo.WalkingTrailV0;
 import com.pup.api.walkingTrail.event.vo.WalkingTrailV1;
-import com.pup.api.walkingTrail.service.WalkingTrailDogService;
-import com.pup.api.walkingTrail.service.WalkingTrailImageService;
-import com.pup.api.walkingTrail.service.WalkingTrailItemService;
-import com.pup.api.walkingTrail.service.WalkingTrailService;
+import com.pup.api.walkingTrail.service.*;
 import com.pup.global.dto.CommonResponse;
 import com.pup.global.dto.SwaggerExampleValue;
 import com.pup.global.dto.UserDetailDto;
@@ -45,12 +39,13 @@ public class WalkingTrailController {
     private final WalkingTrailDogService walkingTrailDogService;
     private final WalkingTrailItemService walkingTrailItemService;
     private final WalkingTrailImageService walkingTrailImageService;
+    private final WalkingTrailLikeService walkingTrailLikeService;
     private final UserService userService;
     private final JwtTokenExtractor jwtTokenExtractor;
 
     @Operation(summary = "나의 산책로 리스트 조회", description = "나의 산책로 리스트를 조회합니다.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "산책로를 생성합니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.FIND_WALKING_LIST))),
+            @ApiResponse(responseCode = "200", description = "나의 산책로 리스트를 조회합니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.FIND_WALKING_LIST))),
             @ApiResponse(responseCode = "401", description = "토큰 정보가 유효하지 않습니다.", content = @Content(mediaType = "application/json", examples = {@ExampleObject(value = SwaggerExampleValue.UN_AUTHENTICATION_RESPONSE)})),
             @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
     @GetMapping
@@ -61,15 +56,15 @@ public class WalkingTrailController {
         return CommonResponse.createResponse(HttpStatus.OK.value(), "나의 산책로 리스트를 조회합니다.", response);
     }
 
-    @Operation(summary = "나의 산책로 리스트 조회", description = "나의 산책로 리스트를 조회합니다.")
+    @Operation(summary = "산책로 리스트 조회", description = "산책로 리스트를 조회합니다.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "산책로를 생성합니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.FIND_WALKING_LIST))),
+            @ApiResponse(responseCode = "200", description = "산책로 리스트를 조회합니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.FIND_WALKING_LIST))),
             @ApiResponse(responseCode = "401", description = "토큰 정보가 유효하지 않습니다.", content = @Content(mediaType = "application/json", examples = {@ExampleObject(value = SwaggerExampleValue.UN_AUTHENTICATION_RESPONSE)})),
             @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
     @GetMapping("/search")
     public ResponseEntity<?> findWalkingTrailList(HttpServletRequest httpServletRequest,
                                                   @RequestParam(value = "name", required = false) String name,
-                                                  @RequestParam(value = "type", required = false) WalkingTrailSearchTypeEnum type) {
+                                                  @RequestParam(value = "type", required = true) WalkingTrailSearchTypeEnum type) {
         UserDetailDto userDetailDto = jwtTokenExtractor.extractUserId(httpServletRequest);
         List<WalkingTrailV1> response = walkingTrailService.search(userDetailDto.getUserId(), name, type);
 
@@ -105,6 +100,30 @@ public class WalkingTrailController {
         walkingTrailDogService.changeWalkingTrailDog(walkingTrail, dto.getDogIdList());
 
         return CommonResponse.createResponseMessage(HttpStatus.OK.value(), "산책로의 강아지를 변경합니다.");
+    }
+
+    @Operation(summary = "산책로 좋아요 / 좋아요 취소", description = "산책로에 좋아요를 누르거나 취소합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "산책로의 강아지를 수정합니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.SAVE_WALKING_TRAIL_LIKE))),
+            @ApiResponse(responseCode = "400", description = "이미 좋아요를 누르셨습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.EXISTED_WALKING_TRAIL_LIKE))),
+            @ApiResponse(responseCode = "401", description = "토큰 정보가 유효하지 않습니다.", content = @Content(mediaType = "application/json", examples = {@ExampleObject(value = SwaggerExampleValue.UN_AUTHENTICATION_RESPONSE)})),
+            @ApiResponse(responseCode = "404", description = "좋아요를 누르지 않았습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.NOT_FOUND_WALKING_TRAIL_LIKE))),
+            @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
+    @PatchMapping("/like/{walkingTrailUid}")
+    public ResponseEntity<?> updateWalkingTrailDog(@PathVariable("walkingTrailUid") String walkingTrailUid, @RequestBody RequestWalkingTrailLikeSaveDto dto, HttpServletRequest httpServletRequest) {
+        UserDetailDto userDetailDto = jwtTokenExtractor.extractUserId(httpServletRequest);
+
+        WalkingTrail walkingTrail = walkingTrailService.findOne(UUID.fromString(walkingTrailUid));
+        log.info("walkingTrail : {}", walkingTrail);
+
+        User user = userService.findOne(userDetailDto.getUserId());
+        log.info("user : {}", user);
+
+        log.info("HELLo");
+
+        walkingTrailLikeService.saveWalkingTrailLike(user, walkingTrail, dto.getLike());
+
+        return CommonResponse.createResponseMessage(HttpStatus.OK.value(), "산책로에 좋아요를 누르거나 취소합니다.");
     }
 
     @Operation(summary = "산책로 공개", description = "산책로를 공개합니다.")
