@@ -91,6 +91,10 @@ public class User extends BaseTimeEntity {
         this.description = description;
     }
 
+    public void changeLastWakingDate() {
+        this.lastWakingDate = LocalDateTime.now();
+    }
+
     public void changePassword(String password) {
         this.password = password;
     }

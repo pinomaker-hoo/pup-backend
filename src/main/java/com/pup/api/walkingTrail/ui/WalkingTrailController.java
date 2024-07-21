@@ -170,8 +170,12 @@ public class WalkingTrailController {
             @ApiResponse(responseCode = "404", description = "산책로를 찾을 수 없습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.NOT_FOUND_WALKING_TRAIL))),
             @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
     @PutMapping
-    public ResponseEntity<?> updateWalkingTrail(@Valid @RequestBody RequestWalkingTrailUpdateDto dto) {
+    public ResponseEntity<?> updateWalkingTrail(@Valid @RequestBody RequestWalkingTrailUpdateDto dto, HttpServletRequest httpServletRequest) {
         WalkingTrail walkingTrail = walkingTrailService.findOne(dto.getWalkingTrailUid());
+        UserDetailDto userDetailDto = jwtTokenExtractor.extractUserId(httpServletRequest);
+        User user = userService.findOne(userDetailDto.getUserId());
+        userService.updateLastWakingDate(user);
+
         walkingTrailService.validationWalkingTrail(walkingTrail);
         walkingTrailItemService.saveWalkingTrialItem(walkingTrail, dto.getPlaceList());
         walkingTrailService.walkingTrailToEnable(walkingTrail, dto);

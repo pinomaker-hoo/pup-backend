@@ -94,6 +94,14 @@ public class UserService {
                 .orElseThrow(() -> new NotFoundException("존재하지 않는 사용자 입니다."));
     }
 
+    /**
+     * 마지막 산책 시간 수정
+     */
+    public User updateLastWakingDate(User user) {
+        user.changeLastWakingDate();
+        return userJpaRepository.save(user);
+    }
+
 
     /**
      * 사용자 정보 수정
