@@ -8,6 +8,7 @@ import com.pup.api.walkingTrail.event.dto.RequestWalkingTrailSaveDto;
 import com.pup.api.walkingTrail.event.dto.RequestWalkingTrailUpdateDto;
 import com.pup.api.walkingTrail.event.vo.WalkingTrailV0;
 import com.pup.api.walkingTrail.event.vo.WalkingTrailV1;
+import com.pup.api.walkingTrail.event.vo.WalkingTrailV1DetailResponse;
 import com.pup.api.walkingTrail.event.vo.WalkingTrailV1Response;
 import com.pup.api.walkingTrail.repository.WalkingTrailJpaRepository;
 import com.pup.global.enums.OpenRangeEnum;
@@ -31,6 +32,7 @@ public class WalkingTrailService {
     private final WalkingTrailItemService walkingTrailItemService;
     private final WalkingTrailDogService walkingTrailDogService;
     private final WalkingTrailLikeService walkingTrailLikeService;
+    private final WalkingTrailImageService walkingTrailImageService;
     private final FriendService friendService;
 
     /**
@@ -129,6 +131,22 @@ public class WalkingTrailService {
         }
 
         return filterList;
+    }
+
+    /**
+     * 산책로 상세 조회
+     */
+    public WalkingTrailV1DetailResponse findOne(UUID walkingTrailUid, Integer userId) {
+        WalkingTrailV1 walkingTrail = walkingTrailJpaRepository.findByWalkingTrailUid(walkingTrailUid);
+
+        if (walkingTrail == null) {
+            throw new NotFoundException("산책로를 찾을 수 없습니다.");
+        }
+
+        Boolean isLike = walkingTrailLikeService.existByUserAndWalkingTrail(userId, walkingTrailUid);
+        List<String> imageList = walkingTrailImageService.findWalkingTrailImageByWalkingTrailId(walkingTrail.getWalkingTrailId());
+
+        return walkingTrail.toResponse(isLike, imageList);
     }
 
     /**

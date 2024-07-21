@@ -13,6 +13,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.UUID;
 
 import static com.pup.global.enums.WalkingTrailSearchTypeEnum.OLDEST;
 import static com.pup.global.enums.WalkingTrailSearchTypeEnum.RECENT;
@@ -93,5 +94,40 @@ public class WalkingTrailJpaCustomRepositoryImpl implements WalkingTrailJpaCusto
         }
 
         return query.fetch();
+    }
+
+    @Override
+    public WalkingTrailV1 findByWalkingTrailUid(UUID walkingTrailUid) {
+        QWalkingTrail wt = QWalkingTrail.walkingTrail;
+        QWalkingTrailReview wtr = QWalkingTrailReview.walkingTrailReview;
+        QWalkingTrailLike wtl = QWalkingTrailLike.walkingTrailLike;
+
+        return queryFactory.select(
+                        Projections.constructor(WalkingTrailV1.class,
+                                wt.walkingTrailId,
+                                wt.name,
+                                wt.description,
+                                wt.walkingTrailUid,
+                                wt.time,
+                                wt.distance,
+                                wt.openRange,
+                                wt.createdDate,
+                                JPAExpressions
+                                        .select(wtr.rating.avg())
+                                        .from(wtr)
+                                        .where(wtr.walkingTrail.walkingTrailId.eq(wt.walkingTrailId)),
+                                wt.user.userId,
+                                JPAExpressions
+                                        .select(wtr.count())
+                                        .from(wtr)
+                                        .where(wtr.walkingTrail.walkingTrailId.eq(wt.walkingTrailId)),
+                                JPAExpressions
+                                        .select(wtl.count())
+                                        .from(wtl)
+                                        .where(wtl.walkingTrail.walkingTrailId.eq(wt.walkingTrailId))
+                        ))
+                .from(wt)
+                .where(wt.walkingTrailUid.eq(walkingTrailUid))
+                .fetchOne();
     }
 }

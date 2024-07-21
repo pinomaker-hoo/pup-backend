@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -27,5 +28,9 @@ public class WalkingTrailV1 {
 
     public WalkingTrailV1Response toResponse(Boolean isLike) {
         return WalkingTrailV1Response.builder().walkingTrailV1(this).isLike(isLike).build();
+    }
+
+    public WalkingTrailV1DetailResponse toResponse(Boolean isLike, List<String> imageList) {
+        return WalkingTrailV1DetailResponse.builder().walkingTrailV1(this).isLike(isLike).imageList(imageList).build();
     }
 }
