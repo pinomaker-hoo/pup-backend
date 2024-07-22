@@ -43,6 +43,7 @@ public class DogController {
     @PostMapping
     public ResponseEntity<?> saveDog(@Valid @RequestBody RequestDogSaveDto dto, HttpServletRequest httpServletRequest) {
         UserDetailDto userDetailDto = jwtTokenExtractor.extractUserId(httpServletRequest);
+        dogService.validationSaveDog(userDetailDto.getUserId(), dto.getDogList().size());
         User user = userService.findOne(userDetailDto.getUserId());
         dogService.saveDogList(user, dto);
 

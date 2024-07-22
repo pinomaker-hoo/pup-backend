@@ -20,11 +20,31 @@ import java.util.List;
 public class DogService {
     private final DogJpaRepository dogJpaRepository;
 
+    /**
+     * 강아지 저장
+     */
     @Transactional(rollbackFor = Exception.class)
     public void saveDogList(User user, RequestDogSaveDto dto) {
         for (SaveDog dog : dto.getDogList()) {
             saveDog(user, dog);
         }
+    }
+
+    /**
+     * 강아지 저장 시 유효성 검사
+     */
+    public void validationSaveDog(Integer userId, Integer savedDogSize) {
+        long dogCount = findDogCount(userId);
+        if (dogCount + savedDogSize > 4) {
+            throw new IllegalArgumentException("강아지는 최대 4마리까지 등록 가능합니다.");
+        }
+    }
+
+    /**
+     * 유저 아이디로 강아지 수 조회
+     */
+    public long findDogCount(Integer userId) {
+        return dogJpaRepository.countByUserId(userId);
     }
 
     /**
