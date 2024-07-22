@@ -33,8 +33,8 @@ public class DogService {
     /**
      * 강아지 저장 시 유효성 검사
      */
-    public void validationSaveDog(Integer userId, Integer savedDogSize) {
-        long dogCount = findDogCount(userId);
+    public void validationSaveDog(User user, Integer savedDogSize) {
+        long dogCount = findDogCount(user);
         if (dogCount + savedDogSize > 4) {
             throw new IllegalArgumentException("강아지는 최대 4마리까지 등록 가능합니다.");
         }
@@ -43,8 +43,25 @@ public class DogService {
     /**
      * 유저 아이디로 강아지 수 조회
      */
-    public long findDogCount(Integer userId) {
-        return dogJpaRepository.countByUserId(userId);
+    public long findDogCount(User user) {
+        return dogJpaRepository.countByUser(user);
+    }
+
+    /**
+     * 강아지 존재 여부 확인
+     */
+    public void existByDogId(Long dogId) {
+        Boolean existsByDogId = dogJpaRepository.existsByDogId(dogId);
+        if (!existsByDogId) {
+            throw new NotFoundException("강아지를 찾을 수 없습니다.");
+        }
+    }
+
+    /**
+     * 강아지 삭제
+     */
+    public void deleteDog(Long dogId) {
+        dogJpaRepository.deleteById(dogId);
     }
 
     /**

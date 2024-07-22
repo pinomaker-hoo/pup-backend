@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface DogJpaCustomRepository {
     List<DogV0> findDogListByUserId(Integer userId);
+
+    Boolean existsByDogId(Long dogId);
 }

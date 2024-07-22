@@ -43,8 +43,9 @@ public class DogController {
     @PostMapping
     public ResponseEntity<?> saveDog(@Valid @RequestBody RequestDogSaveDto dto, HttpServletRequest httpServletRequest) {
         UserDetailDto userDetailDto = jwtTokenExtractor.extractUserId(httpServletRequest);
-        dogService.validationSaveDog(userDetailDto.getUserId(), dto.getDogList().size());
         User user = userService.findOne(userDetailDto.getUserId());
+
+        dogService.validationSaveDog(user, dto.getDogList().size());
         dogService.saveDogList(user, dto);
 
         return CommonResponse.createResponseMessage(HttpStatus.OK.value(), "강아지 저장에 성공 했습니다.");
@@ -73,5 +74,19 @@ public class DogController {
         List<DogV0> response = dogService.findDogListByUserId(userId);
 
         return CommonResponse.createResponse(HttpStatus.OK.value(), "강아지 리스트를 조회합니다.", response);
+    }
+
+    @Operation(summary = "강아지 삭제", description = "강아지를 삭제합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "강아지를 삭제합니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.DELETE_DOG_RESPONSE))),
+            @ApiResponse(responseCode = "401", description = "토큰 정보가 유효하지 않습니다.", content = @Content(mediaType = "application/json", examples = {@ExampleObject(value = SwaggerExampleValue.UN_AUTHENTICATION_RESPONSE)})),
+            @ApiResponse(responseCode = "404", description = "해당 강아지가 없습니다.", content = @Content(mediaType = "application/json", examples = {@ExampleObject(value = SwaggerExampleValue.NOT_FOUND_DOG_RESPONSE)})),
+            @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
+    @DeleteMapping("/{dogId}")
+    public ResponseEntity<?> deleteDog(@PathVariable("dogId") Long dogId) {
+        dogService.existByDogId(dogId);
+        dogService.deleteDog(dogId);
+
+        return CommonResponse.createResponseMessage(HttpStatus.OK.value(), "강아지를 삭제합니다.");
     }
 }

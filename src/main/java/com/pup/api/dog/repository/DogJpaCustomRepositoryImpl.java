@@ -27,4 +27,14 @@ public class DogJpaCustomRepositoryImpl implements DogJpaCustomRepository {
                 .where(d.user.userId.eq(userId))
                 .fetch();
     }
+
+    @Override
+    public Boolean existsByDogId(Long dogId) {
+        QDog d = QDog.dog;
+
+        return queryFactory.selectOne()
+                .from(d)
+                .where(d.dogId.eq(dogId))
+                .fetchFirst() != null;
+    }
 }
