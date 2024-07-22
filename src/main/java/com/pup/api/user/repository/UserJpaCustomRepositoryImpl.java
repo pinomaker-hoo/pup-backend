@@ -43,7 +43,6 @@ public class UserJpaCustomRepositoryImpl implements UserJpaCustomRepository {
                                 u.userId,
                                 u.email,
                                 u.password,
-                                u.nickname,
                                 u.userUid)
                 ).from(u)
                 .where(u.email.eq(email))
@@ -59,7 +58,6 @@ public class UserJpaCustomRepositoryImpl implements UserJpaCustomRepository {
                                 UserV0.class,
                                 u.userId,
                                 u.email,
-                                u.nickname,
                                 u.userUid,
                                 u.profile,
                                 u.description
@@ -77,7 +75,6 @@ public class UserJpaCustomRepositoryImpl implements UserJpaCustomRepository {
         JPAQuery<Tuple> query = queryFactory.select(
                         u.userId,
                         u.userUid,
-                        u.nickname,
                         u.profile,
                         d.profile
                 ).from(u)
@@ -93,7 +90,6 @@ public class UserJpaCustomRepositoryImpl implements UserJpaCustomRepository {
             UserV1 user = friendMap.computeIfAbsent(uId, id -> new UserV1(
                     id,
                     tuple.get(u.userUid),
-                    tuple.get(u.nickname),
                     tuple.get(u.profile),
                     new ArrayList<>()
             ));

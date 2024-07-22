@@ -50,10 +50,6 @@ public class User extends BaseTimeEntity {
     @Column(length = 255, nullable = true, name = "social_token")
     private String socialToken;
 
-    @Comment("닉네임")
-    @Column(length = 50, nullable = false)
-    private String nickname;
-
     @Comment("프로필 이미지")
     @Column(length = 255, nullable = false)
     private String profile;

@@ -11,7 +11,6 @@ import java.util.UUID;
 public class UserV1 {
     private Integer userId;
     private UUID userUid;
-    private String nickname;
     private String profile;
     private List<String> dogProfileList;
 }

@@ -42,7 +42,7 @@ public class FriendJpaCustomRepositoryImpl implements FriendJpaCustomRepository 
                 .select(
                         f.friendId,
                         f.friend.userId,
-                        f.friend.nickname,
+                        f.friend.userUid,
                         f.friend.description,
                         f.friend.profile,
                         f.friend.lastWakingDate,
@@ -51,10 +51,6 @@ public class FriendJpaCustomRepositoryImpl implements FriendJpaCustomRepository 
                 .from(f)
                 .leftJoin(f.friend.dogList, d)
                 .where(f.user.userId.eq(userId));
-
-        if (name != null) {
-            query = query.where(f.friend.nickname.contains(name));
-        }
 
         List<Tuple> results = query.fetch();
 
@@ -65,7 +61,7 @@ public class FriendJpaCustomRepositoryImpl implements FriendJpaCustomRepository 
             FriendV0 friend = friendMap.computeIfAbsent(friendId, id -> new FriendV0(
                     id,
                     tuple.get(f.friend.userId),
-                    tuple.get(f.friend.nickname),
+                    tuple.get(f.friend.userUid),
                     tuple.get(f.friend.description),
                     tuple.get(f.friend.profile),
                     tuple.get(f.friend.lastWakingDate),

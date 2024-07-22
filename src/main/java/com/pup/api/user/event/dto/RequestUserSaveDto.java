@@ -31,7 +31,6 @@ public class RequestUserSaveDto {
         return User.builder()
                 .email(this.email)
                 .password(password)
-                .nickname("")
                 .socialType(UserSocialTypeEnum.PUP)
                 .profile("")
                 .description("")
