@@ -56,9 +56,11 @@ public class UserService {
         List<FriendV1> friendList = friendService.findFriendList(userId);
         List<UserV1> list = userJpaRepository.findUserList(userId);
 
-        List<UserV1> filterList = list.stream().filter(item ->
-                friendList.stream().noneMatch(friend -> friend.getFriendUserId().equals(item.getUserId()))
-        ).toList();
+        List<UserV1> filterList = list.stream()
+                .filter(item ->
+                        friendList.stream().noneMatch(friend -> friend.getFriendUserId().equals(item.getUserId()))
+                ).filter(item -> item.getUserUid().toString().contains(userUid))
+                .toList();
 
         return filterList;
     }

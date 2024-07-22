@@ -35,7 +35,9 @@ public class FriendService {
      * 친구 리스트 조회
      */
     public List<FriendV0> findFriendList(Integer userId, String name) {
-        return friendJpaRepository.findFriendList(userId, name);
+        List<FriendV0> list = friendJpaRepository.findFriendList(userId, name);
+
+        return list.stream().filter(item -> item.getUserUid().toString().contains(name)).toList();
     }
 
     /**
