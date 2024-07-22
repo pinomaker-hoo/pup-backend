@@ -24,6 +24,7 @@ public class WalkingTrailV1Response {
     private LocalDateTime createdDate;
     private Double rating;
     private Integer userId;
+    private UUID userUid;
     private long reviewCount;
     private long likeCount;
     private Boolean isLike;
@@ -41,6 +42,7 @@ public class WalkingTrailV1Response {
         this.createdDate = walkingTrailV1.getCreatedDate();
         this.rating = walkingTrailV1.getRating();
         this.userId = walkingTrailV1.getUserId();
+        this.userUid = walkingTrailV1.getUserUid();
         this.reviewCount = walkingTrailV1.getReviewCount();
         this.likeCount = walkingTrailV1.getLikeCount();
         this.isLike = isLike;

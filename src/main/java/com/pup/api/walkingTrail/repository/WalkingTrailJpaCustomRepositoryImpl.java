@@ -71,6 +71,7 @@ public class WalkingTrailJpaCustomRepositoryImpl implements WalkingTrailJpaCusto
                                         .from(wtr)
                                         .where(wtr.walkingTrail.walkingTrailId.eq(wt.walkingTrailId)),
                                 wt.user.userId,
+                                wt.user.userUid,
                                 JPAExpressions
                                         .select(wtr.count())
                                         .from(wtr)
