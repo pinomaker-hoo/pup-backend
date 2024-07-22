@@ -47,4 +47,11 @@ public class Dog extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "dog", cascade = CascadeType.REMOVE)
     private List<WalkingTrailDog> walkingTrailDogList;
+
+    public void changeDog(String name, String profile, LocalDate birth, Boolean isNeutered) {
+        this.name = name;
+        this.profile = profile;
+        this.birth = birth;
+        this.isNeutered = isNeutered;
+    }
 }

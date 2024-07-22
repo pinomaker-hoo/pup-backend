@@ -2,6 +2,7 @@ package com.pup.api.dog.service;
 
 import com.pup.api.dog.domain.Dog;
 import com.pup.api.dog.event.dto.RequestDogSaveDto;
+import com.pup.api.dog.event.dto.RequestDogUpdateDto;
 import com.pup.api.dog.event.dto.SaveDog;
 import com.pup.api.dog.event.vo.DogV0;
 import com.pup.api.dog.repository.DogJpaRepository;
@@ -69,6 +70,14 @@ public class DogService {
      */
     public Dog findOne(Long dogId) {
         return dogJpaRepository.findById(dogId).orElseThrow(() -> new NotFoundException("해당 강아지가 없습니다."));
+    }
+
+    /**
+     * 강아지 정보 수정
+     */
+    public void updateDog(Dog dog, RequestDogUpdateDto dto) {
+        dog.changeDog(dto.getName(), dto.getProfile(), dto.getBirth(), dto.getIsNeutered());
+        dogJpaRepository.save(dog);
     }
 
     /**

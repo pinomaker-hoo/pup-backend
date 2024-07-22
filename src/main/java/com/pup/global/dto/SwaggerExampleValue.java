@@ -7,6 +7,9 @@ public class SwaggerExampleValue {
     // ** DELETE : /api/v1/dog/{}
     public static final String DELETE_DOG_RESPONSE = "{\"code\":200,\"status\":\"OK\",\"message\":\"강아지를 삭제합니다.\"}";
 
+    // ** PUT : /api/v1/dog/{}
+    public static final String UPDATE_DOG_RESPONSE = "{\"code\":200,\"status\":\"OK\",\"message\":\"강아지를 수정 합니다.\"}";
+
     // ** POST : /api/v1/auth
     public static final String USER_SAVE_RESPONSE = "{\"code\":200,\"status\":\"OK\",\"message\":\"회원가입에 성공하였습니다.\"}";
     public static final String USER_SAVE_EXISTED_NUMBER_RESPONSE = "{\"code\":400,\"status\":\"BAD_REQUEST\",\"message\":\"이미 사용 중인 아이디 입니다.\"}";
