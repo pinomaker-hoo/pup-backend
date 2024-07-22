@@ -27,6 +27,10 @@ public class WalkingTrail extends BaseTimeEntity {
     @Column(length = 50, nullable = true)
     private String name;
 
+    @Comment("메인 이미지")
+    @Column(length = 255, nullable = true, name = "main_image")
+    private String mainImage;
+
     @Comment("설명")
     @Column(length = 500, nullable = true)
     private String description;
@@ -104,13 +108,14 @@ public class WalkingTrail extends BaseTimeEntity {
                 .build();
     }
 
-    public void toOver(String name, Integer time, Float distance, String description, OpenRangeEnum openRange) {
+    public void toOver(String name, Integer time, Float distance, String description, OpenRangeEnum openRange, String mainImage) {
         this.isEnabled = true;
         this.name = name;
         this.time = time;
         this.distance = distance;
         this.description = description;
         this.openRange = openRange;
+        this.mainImage = mainImage;
     }
 
     public void toExpose() {

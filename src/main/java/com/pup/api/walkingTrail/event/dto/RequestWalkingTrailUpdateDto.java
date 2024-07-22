@@ -24,6 +24,10 @@ public class RequestWalkingTrailUpdateDto {
     @NotNull
     private String name;
 
+    @Schema(example = "https://pup.com/123123123.jpg")
+    @NotNull
+    private String mainImage;
+
     @Schema(example = "120", description = "산책 시간, 단위는 초")
     @NotNull
     private Integer time;

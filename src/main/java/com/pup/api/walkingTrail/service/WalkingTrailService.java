@@ -63,7 +63,7 @@ public class WalkingTrailService {
      * 산책로 활성화
      */
     public void walkingTrailToEnable(WalkingTrail walkingTrail, RequestWalkingTrailUpdateDto dto) {
-        walkingTrail.toOver(dto.getName(), dto.getTime(), dto.getDistance(), dto.getDescription(), dto.getOpenRange());
+        walkingTrail.toOver(dto.getName(), dto.getTime(), dto.getDistance(), dto.getDescription(), dto.getOpenRange(), dto.getMainImage());
         walkingTrailJpaRepository.save(walkingTrail);
     }
 
