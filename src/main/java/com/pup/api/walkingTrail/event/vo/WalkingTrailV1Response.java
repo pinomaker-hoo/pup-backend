@@ -14,6 +14,7 @@ import java.util.UUID;
 @Getter
 public class WalkingTrailV1Response {
     private Long walkingTrailId;
+    private String mainImage;
     private String name;
     private String description;
     private UUID walkingTrailUid;
@@ -30,6 +31,7 @@ public class WalkingTrailV1Response {
     @Builder
     public WalkingTrailV1Response(WalkingTrailV1 walkingTrailV1, Boolean isLike) {
         this.walkingTrailId = walkingTrailV1.getWalkingTrailId();
+        this.mainImage = walkingTrailV1.getMainImage();
         this.name = walkingTrailV1.getName();
         this.description = walkingTrailV1.getDescription();
         this.walkingTrailUid = walkingTrailV1.getWalkingTrailUid();

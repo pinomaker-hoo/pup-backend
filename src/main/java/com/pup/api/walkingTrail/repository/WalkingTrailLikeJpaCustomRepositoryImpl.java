@@ -38,6 +38,7 @@ public class WalkingTrailLikeJpaCustomRepositoryImpl implements WalkingTrailLike
         JPAQuery<WalkingTrailV2> query = queryFactory.select(
                         Projections.constructor(WalkingTrailV2.class,
                                 wtl.walkingTrailLikeId,
+                                wtl.walkingTrail.mainImage,
                                 wtl.walkingTrail.walkingTrailId,
                                 wtl.walkingTrail.name,
                                 wtl.walkingTrail.description,

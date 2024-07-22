@@ -14,6 +14,7 @@ import java.util.UUID;
 @Getter
 public class WalkingTrailV1 {
     private Long walkingTrailId;
+    private String mainImage;
     private String name;
     private String description;
     private UUID walkingTrailUid;

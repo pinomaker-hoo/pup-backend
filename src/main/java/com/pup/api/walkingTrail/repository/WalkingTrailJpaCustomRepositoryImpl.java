@@ -30,6 +30,7 @@ public class WalkingTrailJpaCustomRepositoryImpl implements WalkingTrailJpaCusto
         return queryFactory.select(
                         Projections.constructor(WalkingTrailV0.class,
                                 wt.walkingTrailId,
+                                wt.mainImage,
                                 wt.name,
                                 wt.description,
                                 wt.walkingTrailUid,
@@ -57,6 +58,7 @@ public class WalkingTrailJpaCustomRepositoryImpl implements WalkingTrailJpaCusto
         JPAQuery<WalkingTrailV1> query = queryFactory.select(
                         Projections.constructor(WalkingTrailV1.class,
                                 wt.walkingTrailId,
+                                wt.mainImage,
                                 wt.name,
                                 wt.description,
                                 wt.walkingTrailUid,
@@ -105,6 +107,7 @@ public class WalkingTrailJpaCustomRepositoryImpl implements WalkingTrailJpaCusto
         return queryFactory.select(
                         Projections.constructor(WalkingTrailV1.class,
                                 wt.walkingTrailId,
+                                wt.mainImage,
                                 wt.name,
                                 wt.description,
                                 wt.walkingTrailUid,

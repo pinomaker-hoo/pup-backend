@@ -13,6 +13,7 @@ import java.util.UUID;
 @Getter
 public class WalkingTrailV2 {
     private Long walkingTrailLikeId;
+    private String mainImage;
     private Long walkingTrailId;
     private String name;
     private String description;
