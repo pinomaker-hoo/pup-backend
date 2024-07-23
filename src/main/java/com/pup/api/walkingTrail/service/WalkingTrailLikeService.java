@@ -45,7 +45,7 @@ public class WalkingTrailLikeService {
             throw new BadRequestException("좋아요를 누르지 않았습니다.");
         }
 
-        walkingTrailLikeJpaRepository.deleteWalkingTrailLike(user.getUserId(), walkingTrail.getWalkingTrailId());
+        walkingTrailLikeJpaRepository.deleteWalkingTrailLike(user.getUserId(), walkingTrail.getWalkingTrailUid());
     }
 
     /**
