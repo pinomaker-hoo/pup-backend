@@ -110,15 +110,12 @@ public class WalkingTrail extends BaseTimeEntity {
 
     public void toOver(String name, Integer time, Float distance, String description, OpenRangeEnum openRange, String mainImage) {
         this.isEnabled = true;
+        this.isExposed = true;
         this.name = name;
         this.time = time;
         this.distance = distance;
         this.description = description;
         this.openRange = openRange;
         this.mainImage = mainImage;
-    }
-
-    public void toExpose() {
-        this.isExposed = true;
     }
 }

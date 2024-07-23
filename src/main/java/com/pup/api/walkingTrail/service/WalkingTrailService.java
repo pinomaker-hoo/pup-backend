@@ -68,14 +68,6 @@ public class WalkingTrailService {
     }
 
     /**
-     * 산책로 노출
-     */
-    public void walkingTrailToExpose(WalkingTrail walkingTrail) {
-        walkingTrail.toExpose();
-        walkingTrailJpaRepository.save(walkingTrail);
-    }
-
-    /**
      * 산책로 조회
      */
     public WalkingTrail findOne(UUID walkingTrailUid) {

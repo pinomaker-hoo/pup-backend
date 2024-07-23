@@ -148,20 +148,6 @@ public class WalkingTrailController {
         return CommonResponse.createResponseMessage(HttpStatus.OK.value(), "산책로에 좋아요를 누르거나 취소합니다.");
     }
 
-    @Operation(summary = "산책로 공개", description = "산책로를 공개합니다.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "산책로를 공개합니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.EXPOSE_WALKING_TRAIL))),
-            @ApiResponse(responseCode = "401", description = "토큰 정보가 유효하지 않습니다.", content = @Content(mediaType = "application/json", examples = {@ExampleObject(value = SwaggerExampleValue.UN_AUTHENTICATION_RESPONSE)})),
-            @ApiResponse(responseCode = "404", description = "산책로를 찾을 수 없습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.NOT_FOUND_WALKING_TRAIL))),
-            @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
-    @PatchMapping("/expose/{walkingTrailUid}")
-    public ResponseEntity<?> updateWalkingTrailExpose(@PathVariable("walkingTrailUid") String walkingTrailUid) {
-        WalkingTrail walkingTrail = walkingTrailService.findOne(UUID.fromString(walkingTrailUid));
-        walkingTrailService.walkingTrailToExpose(walkingTrail);
-
-        return CommonResponse.createResponseMessage(HttpStatus.OK.value(), "산책로를 공개합니다.");
-    }
-
     @Operation(summary = "산책 종료", description = "산책을 종료합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "산책로 지점을 생성합니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.SAVE_WALKING_TRAIL_ITEM))),
