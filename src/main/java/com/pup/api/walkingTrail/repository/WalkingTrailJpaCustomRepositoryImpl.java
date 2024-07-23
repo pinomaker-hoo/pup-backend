@@ -44,7 +44,6 @@ public class WalkingTrailJpaCustomRepositoryImpl implements WalkingTrailJpaCusto
                                         .where(wtr.walkingTrail.walkingTrailId.eq(wt.walkingTrailId))
                         ))
                 .from(wt)
-                .leftJoin(wt.walkingTrailReviewList, wtr)
                 .where(wt.user.userId.eq(userId))
                 .fetch();
     }
