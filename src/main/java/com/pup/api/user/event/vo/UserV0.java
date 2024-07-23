@@ -10,7 +10,7 @@ import java.util.UUID;
 public class UserV0 {
     private Integer userId;
     private String email;
-    private UUID userUid;
+    private String userUid;
     private String profile;
     private String description;
 }

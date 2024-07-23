@@ -11,7 +11,7 @@ import java.util.UUID;
 public class UserV0Response {
     private Integer userId;
     private String email;
-    private UUID userUid;
+    private String userUid;
     private String profile;
     private String description;
     private Boolean isFriend;

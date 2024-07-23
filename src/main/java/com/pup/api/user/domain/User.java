@@ -38,8 +38,8 @@ public class User extends BaseTimeEntity {
     private String password;
 
     @Comment("유저 UID")
-    @Column(nullable = false, name = "user_uid")
-    private UUID userUid;
+    @Column(nullable = false, name = "user_uid", length = 20)
+    private String userUid;
 
     @Comment("소셜 타입")
     @Column(nullable = false, name = "social_type")

@@ -11,6 +11,6 @@ import java.util.UUID;
 public class LoginResponse {
     private Integer userId;
     private String email;
-    private UUID userUid;
+    private String userUid;
     private TokenDto token;
 }

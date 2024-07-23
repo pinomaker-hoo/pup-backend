@@ -12,7 +12,7 @@ import java.util.UUID;
 public class FriendV0 {
     private Long friendId;
     private Integer userId;
-    private UUID userUid;
+    private String userUid;
     private String description;
     private String profile;
     private LocalDateTime lastWakingDate;

@@ -24,7 +24,7 @@ public class WalkingTrailV1 {
     private LocalDateTime createdDate;
     private Double rating;
     private Integer userId;
-    private UUID userUid;
+    private String userUid;
     private long reviewCount;
     private long likeCount;
 

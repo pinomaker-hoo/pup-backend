@@ -12,7 +12,7 @@ public class LoginUser {
     private Integer userId;
     private String email;
     private String password;
-    private UUID userUid;
+    private String userUid;
 
     public LoginResponse toResponse(TokenDto token) {
         return new LoginResponse(userId, email, userUid, token);

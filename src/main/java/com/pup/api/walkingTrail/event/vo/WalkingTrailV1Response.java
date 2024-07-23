@@ -24,7 +24,7 @@ public class WalkingTrailV1Response {
     private LocalDateTime createdDate;
     private Double rating;
     private Integer userId;
-    private UUID userUid;
+    private String userUid;
     private long reviewCount;
     private long likeCount;
     private Boolean isLike;

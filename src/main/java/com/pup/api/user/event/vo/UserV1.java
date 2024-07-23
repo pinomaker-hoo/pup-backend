@@ -10,7 +10,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UserV1 {
     private Integer userId;
-    private UUID userUid;
+    private String userUid;
     private String profile;
     private List<String> dogProfileList;
 }
