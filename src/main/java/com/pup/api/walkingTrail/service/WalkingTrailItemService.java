@@ -3,6 +3,7 @@ package com.pup.api.walkingTrail.service;
 import com.pup.api.walkingTrail.domain.WalkingTrail;
 import com.pup.api.walkingTrail.domain.WalkingTrailItem;
 import com.pup.api.walkingTrail.event.dto.Place;
+import com.pup.api.walkingTrail.event.vo.WalkingTrailItemV0;
 import com.pup.api.walkingTrail.repository.WalkingTrailItemJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,13 @@ public class WalkingTrailItemService {
                     .lng(place.getLng())
                     .build());
         }
+    }
+
+    /**
+     * 산책 아이템 조회
+     */
+    public List<WalkingTrailItemV0> findWalkingTrailItemByWalkingTrailId(Long walkingTrailId) {
+        return walkingTrailItemJpaRepository.findWalkingTrailItemV0ByWalkingTrailId(walkingTrailId);
     }
 
     /**

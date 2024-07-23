@@ -6,10 +6,7 @@ import com.pup.api.user.domain.User;
 import com.pup.api.walkingTrail.domain.WalkingTrail;
 import com.pup.api.walkingTrail.event.dto.RequestWalkingTrailSaveDto;
 import com.pup.api.walkingTrail.event.dto.RequestWalkingTrailUpdateDto;
-import com.pup.api.walkingTrail.event.vo.WalkingTrailV0;
-import com.pup.api.walkingTrail.event.vo.WalkingTrailV1;
-import com.pup.api.walkingTrail.event.vo.WalkingTrailV1DetailResponse;
-import com.pup.api.walkingTrail.event.vo.WalkingTrailV1Response;
+import com.pup.api.walkingTrail.event.vo.*;
 import com.pup.api.walkingTrail.repository.WalkingTrailJpaRepository;
 import com.pup.global.enums.OpenRangeEnum;
 import com.pup.global.enums.WalkingTrailSearchTypeEnum;
@@ -137,8 +134,9 @@ public class WalkingTrailService {
 
         Boolean isLike = walkingTrailLikeService.existByUserAndWalkingTrail(userId, walkingTrailUid);
         List<String> imageList = walkingTrailImageService.findWalkingTrailImageByWalkingTrailId(walkingTrail.getWalkingTrailId());
+        List<WalkingTrailItemV0> itemList = walkingTrailItemService.findWalkingTrailItemByWalkingTrailId(walkingTrail.getWalkingTrailId());
 
-        return walkingTrail.toResponse(isLike, imageList);
+        return walkingTrail.toResponse(isLike, imageList, itemList);
     }
 
     /**

@@ -28,10 +28,11 @@ public class WalkingTrailV1DetailResponse {
     private long reviewCount;
     private long likeCount;
     private Boolean isLike;
+    private List<WalkingTrailItemV0> itemList;
     private List<String> imageList;
 
     @Builder
-    public WalkingTrailV1DetailResponse(WalkingTrailV1 walkingTrailV1, Boolean isLike, List<String> imageList) {
+    public WalkingTrailV1DetailResponse(WalkingTrailV1 walkingTrailV1, Boolean isLike, List<String> imageList, List<WalkingTrailItemV0> itemList) {
         this.walkingTrailId = walkingTrailV1.getWalkingTrailId();
         this.mainImage = walkingTrailV1.getMainImage();
         this.name = walkingTrailV1.getName();
@@ -47,5 +48,6 @@ public class WalkingTrailV1DetailResponse {
         this.likeCount = walkingTrailV1.getLikeCount();
         this.isLike = isLike;
         this.imageList = imageList;
+        this.itemList = itemList;
     }
 }

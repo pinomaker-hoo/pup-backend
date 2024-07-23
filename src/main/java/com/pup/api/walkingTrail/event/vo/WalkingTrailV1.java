@@ -32,7 +32,7 @@ public class WalkingTrailV1 {
         return WalkingTrailV1Response.builder().walkingTrailV1(this).isLike(isLike).build();
     }
 
-    public WalkingTrailV1DetailResponse toResponse(Boolean isLike, List<String> imageList) {
-        return WalkingTrailV1DetailResponse.builder().walkingTrailV1(this).isLike(isLike).imageList(imageList).build();
+    public WalkingTrailV1DetailResponse toResponse(Boolean isLike, List<String> imageList, List<WalkingTrailItemV0> itemList) {
+        return WalkingTrailV1DetailResponse.builder().walkingTrailV1(this).isLike(isLike).imageList(imageList).itemList(itemList).build();
     }
 }
