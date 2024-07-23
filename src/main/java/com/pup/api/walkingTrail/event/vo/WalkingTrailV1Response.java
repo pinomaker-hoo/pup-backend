@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -28,9 +29,10 @@ public class WalkingTrailV1Response {
     private long reviewCount;
     private long likeCount;
     private Boolean isLike;
+    private List<WalkingTrailItemV0> itemList;
 
     @Builder
-    public WalkingTrailV1Response(WalkingTrailV1 walkingTrailV1, Boolean isLike) {
+    public WalkingTrailV1Response(WalkingTrailV1 walkingTrailV1, Boolean isLike, List<WalkingTrailItemV0> itemList) {
         this.walkingTrailId = walkingTrailV1.getWalkingTrailId();
         this.mainImage = walkingTrailV1.getMainImage();
         this.name = walkingTrailV1.getName();
@@ -46,5 +48,6 @@ public class WalkingTrailV1Response {
         this.reviewCount = walkingTrailV1.getReviewCount();
         this.likeCount = walkingTrailV1.getLikeCount();
         this.isLike = isLike;
+        this.itemList = itemList;
     }
 }

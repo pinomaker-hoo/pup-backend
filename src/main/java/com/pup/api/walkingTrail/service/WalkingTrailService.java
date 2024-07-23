@@ -103,7 +103,8 @@ public class WalkingTrailService {
                 }
         ).map(item -> {
             Boolean isLike = walkingTrailLikeService.existByUserAndWalkingTrail(userId, item.getWalkingTrailUid());
-            return item.toResponse(isLike);
+            List<WalkingTrailItemV0> itemList = walkingTrailItemService.findWalkingTrailItemByWalkingTrailId(item.getWalkingTrailId());
+            return item.toResponse(isLike, itemList);
         }).toList();
 
 

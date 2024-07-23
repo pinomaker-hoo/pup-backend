@@ -28,8 +28,8 @@ public class WalkingTrailV1 {
     private long reviewCount;
     private long likeCount;
 
-    public WalkingTrailV1Response toResponse(Boolean isLike) {
-        return WalkingTrailV1Response.builder().walkingTrailV1(this).isLike(isLike).build();
+    public WalkingTrailV1Response toResponse(Boolean isLike, List<WalkingTrailItemV0> itemList) {
+        return WalkingTrailV1Response.builder().walkingTrailV1(this).isLike(isLike).itemList(itemList).build();
     }
 
     public WalkingTrailV1DetailResponse toResponse(Boolean isLike, List<String> imageList, List<WalkingTrailItemV0> itemList) {
