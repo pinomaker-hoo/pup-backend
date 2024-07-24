@@ -23,6 +23,10 @@ public class WalkingTrailReview extends BaseTimeEntity {
     @Column(nullable = true)
     private Float rating;
 
+    @Comment("산책 시간")
+    @Column(nullable = false)
+    private Integer time;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
