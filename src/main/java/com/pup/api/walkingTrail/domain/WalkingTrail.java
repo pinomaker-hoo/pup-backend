@@ -92,6 +92,15 @@ public class WalkingTrail extends BaseTimeEntity {
                 .build();
     }
 
+    public WalkingTrailReview toWalkingTrailReview(Float rating, Integer time, User user) {
+        return WalkingTrailReview.builder()
+                .walkingTrail(this)
+                .rating(rating)
+                .time(time)
+                .user(user)
+                .build();
+    }
+
     public WalkingTrailDog toWalkingTrailDog(Dog dog) {
         return WalkingTrailDog.builder()
                 .walkingTrail(this)

@@ -3,6 +3,7 @@ package com.pup.api.walkingTrail.ui;
 import com.pup.api.user.domain.User;
 import com.pup.api.user.service.UserService;
 import com.pup.api.walkingTrail.domain.WalkingTrail;
+import com.pup.api.walkingTrail.domain.WalkingTrailReview;
 import com.pup.api.walkingTrail.event.dto.*;
 import com.pup.api.walkingTrail.event.vo.*;
 import com.pup.api.walkingTrail.service.*;
@@ -39,6 +40,7 @@ public class WalkingTrailController {
     private final WalkingTrailItemService walkingTrailItemService;
     private final WalkingTrailImageService walkingTrailImageService;
     private final WalkingTrailLikeService walkingTrailLikeService;
+    private final WalkingTrailReviewService walkingTrailReviewService;
     private final UserService userService;
     private final JwtTokenExtractor jwtTokenExtractor;
 
@@ -182,6 +184,23 @@ public class WalkingTrailController {
         walkingTrailImageService.saveWalkingTrailImage(walkingTrail, dto.getLat(), dto.getLng(), dto.getPath());
 
         return CommonResponse.createResponseMessage(HttpStatus.OK.value(), "산책로 이미지를 생성합니다.");
+    }
+
+    @Operation(summary = "산책로 리뷰", description = "산책로를 리뷰합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "산책로를 리뷰합니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.SAVE_WALKING_TRAIL_REVIEW))),
+            @ApiResponse(responseCode = "401", description = "토큰 정보가 유효하지 않습니다.", content = @Content(mediaType = "application/json", examples = {@ExampleObject(value = SwaggerExampleValue.UN_AUTHENTICATION_RESPONSE)})),
+            @ApiResponse(responseCode = "404", description = "산책로를 찾을 수 없습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.NOT_FOUND_WALKING_TRAIL))),
+            @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
+    @PostMapping("/review")
+    public ResponseEntity<?> saveWalkingTrailReview(@Valid @RequestBody RequestWalkingTrailReviewSaveDto dto, HttpServletRequest httpServletRequest) {
+        UserDetailDto userDetailDto = jwtTokenExtractor.extractUserId(httpServletRequest);
+
+        WalkingTrail walkingTrail = walkingTrailService.findOne(dto.getWalkingTrailUid());
+        User user = userService.findOne(userDetailDto.getUserId());
+        walkingTrailReviewService.saveWalkingTrailReview(walkingTrail, dto, user);
+
+        return CommonResponse.createResponseMessage(HttpStatus.OK.value(), "산책로를 리뷰합니다.");
     }
 
     @Operation(summary = "산책로 삭제", description = "산책로를 삭제합니다.")

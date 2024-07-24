@@ -79,6 +79,9 @@ public class SwaggerExampleValue {
     // ** POST : /api/v1/walking-trail/image
     public static final String SAVE_WALKING_TRAIL_IMAGE = "{\"code\":200,\"status\":\"OK\", \"message\":\"산책로 이미지를 생성합니다.\"}";
 
+    // ** POST : /api/v1/walking-trail/review
+    public static final String SAVE_WALKING_TRAIL_REVIEW = "{\"code\":200,\"status\":\"OK\",\"message\":\"산책로를 리뷰 합니다.\"}";
+
     // ** GET : /api/v1/friend
     public static final String FIND_FRIEND_LIST = "{\"code\":200,\"status\":\"OK\",\"data\":[{\"friendId\":2,\"userId\":5,\"userUid\":\"bce240eb-c8af-47ca-b783-d72954e8adbc\",\"description\":\"\",\"profile\":\"\",\"lastWakingDate\":null,\"dogProfileList\":[\"123123123\",\"https://\"]}],\"message\":\"친구 리스트를 조회합니다.\"}";
 
