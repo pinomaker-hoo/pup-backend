@@ -82,6 +82,9 @@ public class SwaggerExampleValue {
     // ** POST : /api/v1/walking-trail/review
     public static final String SAVE_WALKING_TRAIL_REVIEW = "{\"code\":200,\"status\":\"OK\",\"message\":\"산책로를 리뷰 합니다.\"}";
 
+    // ** GET : /api/v1/walking-trail/review
+    public static final String FIND_REVIEW_LIST = "{\"code\":200,\"status\":\"OK\",\"data\":[{\"walkingTrailReviewId\":3,\"mainImage\":null,\"walkingTrailId\":4,\"name\":null,\"description\":null,\"walkingTrailUid\":\"93e1ce84-4e96-468b-b21e-7622f9cc0e42\",\"time\":0,\"distance\":0,\"createdDate\":\"2024-07-18T21:27:39.387889\",\"rating\":2.3333333333333335,\"userId\":4,\"userUid\":\"7b4e6ef6-c29b-4c58-9787-7fcae9a7babb\",\"reviewCount\":9},{\"walkingTrailReviewId\":5,\"mainImage\":null,\"walkingTrailId\":7,\"name\":\"서울시 어쩌구\",\"description\":\"해당 산책에 대한 기록을 저장합니다.\",\"walkingTrailUid\":\"aeeae8d7-ba6f-4562-af18-3a3943486545\",\"time\":0,\"distance\":0,\"createdDate\":\"2024-07-18T21:27:39.387889\",\"rating\":2.3333333333333335,\"userId\":4,\"userUid\":\"7b4e6ef6-c29b-4c58-9787-7fcae9a7babb\",\"reviewCount\":9},{\"walkingTrailReviewId\":6,\"mainImage\":null,\"walkingTrailId\":10,\"name\":\"서울시 어쩌구\",\"description\":\"해당 산책에 대한 기록을 저장합니다.\",\"walkingTrailUid\":\"cf2c63cc-8b06-4b3d-8b2d-30f78be5ada2\",\"time\":0,\"distance\":0,\"createdDate\":\"2024-07-18T21:27:39.387889\",\"rating\":2.3333333333333335,\"userId\":6,\"userUid\":\"b758c502-049e-42ab-ac19-95b9f7524e59\",\"reviewCount\":9}],\"message\":\"유저의 산책로 리뷰 리스트 조회 합니다.\"}";
+
     // ** GET : /api/v1/friend
     public static final String FIND_FRIEND_LIST = "{\"code\":200,\"status\":\"OK\",\"data\":[{\"friendId\":2,\"userId\":5,\"userUid\":\"bce240eb-c8af-47ca-b783-d72954e8adbc\",\"description\":\"\",\"profile\":\"\",\"lastWakingDate\":null,\"dogProfileList\":[\"123123123\",\"https://\"]}],\"message\":\"친구 리스트를 조회합니다.\"}";
 

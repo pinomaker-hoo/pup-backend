@@ -17,7 +17,7 @@ public class WalkingTrailReview extends BaseTimeEntity {
     @Id
     @Column(name = "walking_trail_review_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long walkingTrailId;
+    private Long walkingTrailReviewId;
 
     @Comment("별점")
     @Column(nullable = false)
