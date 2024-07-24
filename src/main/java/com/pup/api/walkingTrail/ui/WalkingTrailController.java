@@ -203,9 +203,9 @@ public class WalkingTrailController {
         return CommonResponse.createResponseMessage(HttpStatus.OK.value(), "산책로를 리뷰합니다.");
     }
 
-    @Operation(summary = "유저의 산책로 리뷰 리스트 조회", description = "산책로 리뷰합니다.")
+    @Operation(summary = "나의 산책로 리뷰 리스트 조회", description = "산책로 리뷰합니다.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "유저의 산책로 리뷰 리스트 조회 합니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.FIND_REVIEW_LIST))),
+            @ApiResponse(responseCode = "200", description = "나의 산책로 리뷰 리스트 조회 합니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.FIND_REVIEW_LIST))),
             @ApiResponse(responseCode = "401", description = "토큰 정보가 유효하지 않습니다.", content = @Content(mediaType = "application/json", examples = {@ExampleObject(value = SwaggerExampleValue.UN_AUTHENTICATION_RESPONSE)})),
             @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
     @GetMapping("/review")
@@ -213,8 +213,23 @@ public class WalkingTrailController {
         UserDetailDto userDetailDto = jwtTokenExtractor.extractUserId(httpServletRequest);
         List<WalkingTrailReviewV0> response = walkingTrailReviewService.findWalkingTrailReviewList(userDetailDto.getUserId());
 
+        return CommonResponse.createResponse(HttpStatus.OK.value(), "나의 산책로 리뷰 리스트 조회 합니다.", response);
+    }
+
+    @Operation(summary = "유저의 산책로 리뷰 리스트 조회", description = "산책로 리뷰합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "유저의 산책로 리뷰 리스트 조회 합니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.FIND_USER_REVIEW_LIST))),
+            @ApiResponse(responseCode = "401", description = "토큰 정보가 유효하지 않습니다.", content = @Content(mediaType = "application/json", examples = {@ExampleObject(value = SwaggerExampleValue.UN_AUTHENTICATION_RESPONSE)})),
+            @ApiResponse(responseCode = "500", description = "서버에서 에러가 발생하였습니다.", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = SwaggerExampleValue.INTERNAL_SERVER_ERROR_RESPONSE)))})
+    @GetMapping("/review/{userId}")
+    public ResponseEntity<?> findWalkingTrailReviewListByUser(@PathVariable("userId") Integer userId, HttpServletRequest httpServletRequest) {
+        User targetUser = userService.findOne(userId);
+        UserDetailDto userDetailDto = jwtTokenExtractor.extractUserId(httpServletRequest);
+        List<WalkingTrailReviewV0> response = walkingTrailReviewService.findWalkingTrailReviewListByUser(targetUser, userDetailDto.getUserId());
+
         return CommonResponse.createResponse(HttpStatus.OK.value(), "유저의 산책로 리뷰 리스트 조회 합니다.", response);
     }
+
 
     @Operation(summary = "산책로 삭제", description = "산책로를 삭제합니다.")
     @ApiResponses(value = {
