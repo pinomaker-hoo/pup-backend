@@ -49,7 +49,7 @@ public class WalkingTrailJpaCustomRepositoryImpl implements WalkingTrailJpaCusto
     }
 
     @Override
-    public List<WalkingTrailV1> findAllByWord(String word, Integer userId, WalkingTrailSearchTypeEnum searchType) {
+    public List<WalkingTrailV1> findAllByWord(String word, WalkingTrailSearchTypeEnum searchType) {
         QWalkingTrail wt = QWalkingTrail.walkingTrail;
         QWalkingTrailReview wtr = QWalkingTrailReview.walkingTrailReview;
         QWalkingTrailLike wtl = QWalkingTrailLike.walkingTrailLike;
@@ -81,7 +81,7 @@ public class WalkingTrailJpaCustomRepositoryImpl implements WalkingTrailJpaCusto
                                         .where(wtl.walkingTrail.walkingTrailId.eq(wt.walkingTrailId))
                         ))
                 .from(wt)
-                .where(wt.isEnabled.eq(true).and(wt.isExposed.eq(true).and(wt.user.userId.ne(userId))));
+                .where(wt.isEnabled.eq(true).and(wt.isExposed.eq(true)));
 
         if (word != null) {
             query.where(wt.name.contains(word));

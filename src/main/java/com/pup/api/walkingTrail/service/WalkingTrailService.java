@@ -86,12 +86,12 @@ public class WalkingTrailService {
     }
 
     public List<WalkingTrailV1Response> search(Integer userId, String word, WalkingTrailSearchTypeEnum type) {
-        List<WalkingTrailV1> list = findAll(word, userId, type);
+        List<WalkingTrailV1> list = findAll(word, type);
         List<FriendV1> friendList = friendService.findFriendList(userId);
 
         List<WalkingTrailV1Response> filterList = list.stream().filter(
                 item -> {
-                    if (item.getOpenRange().equals(OpenRangeEnum.PUBLIC)) {
+                    if (item.getOpenRange().equals(OpenRangeEnum.PUBLIC) || item.getUserId().equals(userId)) {
                         return true;
                     }
 
@@ -99,7 +99,7 @@ public class WalkingTrailService {
                         return false;
                     }
 
-                    return friendList.stream().anyMatch(friend -> friend.getUserId().equals(item.getUserId()));
+                    return friendList.stream().anyMatch(friend -> friend.getFriendUserId().equals(item.getUserId()));
                 }
         ).map(item -> {
             Boolean isLike = walkingTrailLikeService.existByUserAndWalkingTrail(userId, item.getWalkingTrailUid());
@@ -143,7 +143,7 @@ public class WalkingTrailService {
     /**
      * 산책로 리스트 조회
      */
-    public List<WalkingTrailV1> findAll(String word, Integer userId, WalkingTrailSearchTypeEnum searchType) {
-        return walkingTrailJpaRepository.findAllByWord(word, userId, searchType);
+    public List<WalkingTrailV1> findAll(String word, WalkingTrailSearchTypeEnum searchType) {
+        return walkingTrailJpaRepository.findAllByWord(word, searchType);
     }
 }

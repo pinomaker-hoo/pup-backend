@@ -10,7 +10,7 @@ import java.util.UUID;
 public interface WalkingTrailJpaCustomRepository {
     List<WalkingTrailV0> findAllByUserId(Integer userId);
 
-    List<WalkingTrailV1> findAllByWord(String word, Integer userId, WalkingTrailSearchTypeEnum searchType);
+    List<WalkingTrailV1> findAllByWord(String word, WalkingTrailSearchTypeEnum searchType);
 
     WalkingTrailV1 findByWalkingTrailUid(UUID walkingTrailUid);
 }
