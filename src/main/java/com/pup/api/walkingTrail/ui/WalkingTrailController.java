@@ -225,7 +225,7 @@ public class WalkingTrailController {
     public ResponseEntity<?> findWalkingTrailReviewListByUser(@PathVariable("userId") Integer userId, HttpServletRequest httpServletRequest) {
         User targetUser = userService.findOne(userId);
         UserDetailDto userDetailDto = jwtTokenExtractor.extractUserId(httpServletRequest);
-        List<WalkingTrailReviewV0> response = walkingTrailReviewService.findWalkingTrailReviewListByUser(targetUser, userDetailDto.getUserId());
+        List<WalkingTrailReviewResponse> response = walkingTrailReviewService.findWalkingTrailReviewListByUser(targetUser, userDetailDto.getUserId());
 
         return CommonResponse.createResponse(HttpStatus.OK.value(), "유저의 산책로 리뷰 리스트 조회 합니다.", response);
     }

@@ -5,6 +5,8 @@ import com.pup.api.friend.service.FriendService;
 import com.pup.api.user.domain.User;
 import com.pup.api.walkingTrail.domain.WalkingTrail;
 import com.pup.api.walkingTrail.event.dto.RequestWalkingTrailReviewSaveDto;
+import com.pup.api.walkingTrail.event.vo.WalkingTrailItemV0;
+import com.pup.api.walkingTrail.event.vo.WalkingTrailReviewResponse;
 import com.pup.api.walkingTrail.event.vo.WalkingTrailReviewV0;
 import com.pup.api.walkingTrail.repository.WalkingTrailReviewJpaRepository;
 import com.pup.global.enums.OpenRangeEnum;
@@ -20,6 +22,7 @@ import java.util.List;
 @Slf4j
 public class WalkingTrailReviewService {
     private final WalkingTrailReviewJpaRepository walkingTrailReviewJpaRepository;
+    private final WalkingTrailItemService walkingTrailItemService;
     private final FriendService friendService;
 
     /**
@@ -34,7 +37,7 @@ public class WalkingTrailReviewService {
     /**
      * 유저의 산책로 리뷰 리스트 조회
      */
-    public List<WalkingTrailReviewV0> findWalkingTrailReviewListByUser(User targetUser, Integer userId) {
+    public List<WalkingTrailReviewResponse> findWalkingTrailReviewListByUser(User targetUser, Integer userId) {
         if (targetUser.getOpenRange() == OpenRangeEnum.PRIVATE) {
             return new ArrayList<>();
         }
@@ -47,7 +50,13 @@ public class WalkingTrailReviewService {
             }
         }
 
-        return findWalkingTrailReviewList(targetUser.getUserId());
+        return findWalkingTrailReviewList(targetUser.getUserId())
+                .stream()
+                .map(item -> {
+                    List<WalkingTrailItemV0> itemList = walkingTrailItemService.findWalkingTrailItemByWalkingTrailId(item.getWalkingTrailId());
+                    return item.toResponse(itemList);
+                })
+                .toList();
     }
 
     /**
