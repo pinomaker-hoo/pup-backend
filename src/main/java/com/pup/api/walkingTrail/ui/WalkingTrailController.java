@@ -80,7 +80,7 @@ public class WalkingTrailController {
     public ResponseEntity<?> findLikeWalkingTrailList(HttpServletRequest httpServletRequest,
                                                       @RequestParam(value = "type", required = true) WalkingTrailSearchTypeEnum type) {
         UserDetailDto userDetailDto = jwtTokenExtractor.extractUserId(httpServletRequest);
-        List<WalkingTrailV2> response = walkingTrailLikeService.findWalkingTrailLikeByUserId(userDetailDto.getUserId(), type);
+        List<WalkingTrailV2Response> response = walkingTrailLikeService.findWalkingTrailLikeByUserId(userDetailDto.getUserId(), type);
 
         return CommonResponse.createResponse(HttpStatus.OK.value(), "찜한 산책로 리스트를 조회합니다.", response);
     }

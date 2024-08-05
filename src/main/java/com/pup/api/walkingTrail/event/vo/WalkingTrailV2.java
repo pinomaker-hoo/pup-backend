@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -26,4 +27,8 @@ public class WalkingTrailV2 {
     private Integer userId;
     private long reviewCount;
     private long likeCount;
+
+    public WalkingTrailV2Response toResponse(List<WalkingTrailItemV0> itemList) {
+        return WalkingTrailV2Response.builder().walkingTrailV2(this).itemList(itemList).build();
+    }
 }
