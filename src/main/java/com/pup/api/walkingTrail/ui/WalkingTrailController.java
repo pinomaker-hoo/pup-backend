@@ -52,7 +52,7 @@ public class WalkingTrailController {
     @GetMapping
     public ResponseEntity<?> findMyWalkingTrailList(HttpServletRequest httpServletRequest) {
         UserDetailDto userDetailDto = jwtTokenExtractor.extractUserId(httpServletRequest);
-        List<WalkingTrailV0> response = walkingTrailService.findAllByUserId(userDetailDto.getUserId());
+        List<WalkingTrailV0Response> response = walkingTrailService.findAllByUserId(userDetailDto.getUserId());
 
         return CommonResponse.createResponse(HttpStatus.OK.value(), "나의 산책로 리스트를 조회합니다.", response);
     }

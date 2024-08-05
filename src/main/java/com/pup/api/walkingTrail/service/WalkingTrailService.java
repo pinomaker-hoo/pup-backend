@@ -81,8 +81,12 @@ public class WalkingTrailService {
     /**
      * 산책로 리스트 조회
      */
-    public List<WalkingTrailV0> findAllByUserId(Integer userId) {
-        return walkingTrailJpaRepository.findAllByUserId(userId);
+    public List<WalkingTrailV0Response> findAllByUserId(Integer userId) {
+        List<WalkingTrailV0> list = walkingTrailJpaRepository.findAllByUserId(userId);
+        return list.stream().map(item -> {
+            List<WalkingTrailItemV0> itemList = walkingTrailItemService.findWalkingTrailItemByWalkingTrailId(item.getWalkingTrailId());
+            return item.toResponse(itemList);
+        }).toList();
     }
 
     public List<WalkingTrailV1Response> search(Integer userId, String word, WalkingTrailSearchTypeEnum type) {
