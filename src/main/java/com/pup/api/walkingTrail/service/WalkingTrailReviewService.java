@@ -26,6 +26,13 @@ public class WalkingTrailReviewService {
     private final FriendService friendService;
 
     /**
+     * 산책로 좋아요 삭제
+     */
+    public void deleteWalkingTrailReview(List<Long> walkingTrailIdList) {
+        walkingTrailReviewJpaRepository.deleteWalkingTrailReview(walkingTrailIdList);
+    }
+
+    /**
      * 산책로 리뷰 저장
      */
     public void saveWalkingTrailReview(WalkingTrail walkingTrail, RequestWalkingTrailReviewSaveDto dto, User user) {

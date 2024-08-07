@@ -26,6 +26,13 @@ public class WalkingTrailLikeService {
     private final WalkingTrailLikeJpaRepository walkingTrailLikeJpaRepository;
 
     /**
+     * 산책로 좋아요 삭제
+     */
+    public void deleteWalkingTrailLike(List<Long> walkingTrailIdList) {
+        walkingTrailLikeJpaRepository.deleteWalkingTrailLike(walkingTrailIdList);
+    }
+
+    /**
      * 사용자가 해당 산책로에 좋아요를 누르거나 취소
      */
     public void saveWalkingTrailLike(User user, WalkingTrail walkingTrail, Boolean like) {

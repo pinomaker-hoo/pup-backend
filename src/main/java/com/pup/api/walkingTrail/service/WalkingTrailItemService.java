@@ -31,6 +31,13 @@ public class WalkingTrailItemService {
     }
 
     /**
+     * 산책로 아이템 삭제
+     */
+    public void deleteWalkingTrailItem(List<Long> walkingTrailIdList) {
+        walkingTrailItemJpaRepository.deleteWalkingTrailItem(walkingTrailIdList);
+    }
+
+    /**
      * 산책 아이템 조회
      */
     public List<WalkingTrailItemV0> findWalkingTrailItemByWalkingTrailId(Long walkingTrailId) {

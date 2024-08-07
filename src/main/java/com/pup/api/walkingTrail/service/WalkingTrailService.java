@@ -30,6 +30,7 @@ public class WalkingTrailService {
     private final WalkingTrailDogService walkingTrailDogService;
     private final WalkingTrailLikeService walkingTrailLikeService;
     private final WalkingTrailImageService walkingTrailImageService;
+    private final WalkingTrailReviewService walkingTrailReviewService;
     private final FriendService friendService;
 
     /**
@@ -72,9 +73,15 @@ public class WalkingTrailService {
     }
 
     /**
-     * 친구 삭제
+     * 산책로 삭제
      */
+    @Transactional
     public void deleteWalkingTrail(List<Long> walkingTrailIdList) {
+        walkingTrailDogService.deleteWalkingTrailDog(walkingTrailIdList);
+        walkingTrailLikeService.deleteWalkingTrailLike(walkingTrailIdList);
+        walkingTrailImageService.deleteWalkingTrailImage(walkingTrailIdList);
+        walkingTrailItemService.deleteWalkingTrailItem(walkingTrailIdList);
+        walkingTrailDogService.deleteWalkingTrailDog(walkingTrailIdList);
         walkingTrailJpaRepository.deleteWalkingTrail(walkingTrailIdList);
     }
 

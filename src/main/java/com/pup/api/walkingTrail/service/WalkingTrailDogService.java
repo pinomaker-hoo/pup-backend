@@ -29,6 +29,13 @@ public class WalkingTrailDogService {
     }
 
     /**
+     * 산책로 강아지 삭제
+     */
+    public void deleteWalkingTrailDog(List<Long> walkingTrailIdList) {
+        walkingTrailDogJpaRepository.deleteWalkingTrailDog(walkingTrailIdList);
+    }
+
+    /**
      * 산책로에 강아지 저장
      */
     public WalkingTrailDog saveWalkingTrailDog(WalkingTrail walkingTrail, Long dogId) {

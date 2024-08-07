@@ -22,6 +22,13 @@ public class WalkingTrailImageService {
     }
 
     /**
+     * 산책로 이미지 삭제
+     */
+    public void deleteWalkingTrailImage(List<Long> walkingTrailIdList) {
+        walkingTrailImageJpaRepository.deleteWalkingTrailImage(walkingTrailIdList);
+    }
+
+    /**
      * 산책로 이미지 조회
      */
     public List<String> findWalkingTrailImageByWalkingTrailId(Long walkingTrailId) {
