@@ -5,7 +5,6 @@ import com.pup.api.user.domain.UserSocialTypeEnum;
 import com.pup.global.enums.OpenRangeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,20 +19,24 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RequestUserSaveDto {
+public class RequestSocialUserSaveDto {
     @Schema(example = "test@test.com")
-    @Size(max = 50, message = "30자 이내로 입력하세요.")
     @NotNull
     private String email;
 
-    @Schema(example = "1234")
-    private String password;
+    @Schema(example = "GOOGLE")
+    @NotNull
+    private UserSocialTypeEnum userSocialTypeEnum;
 
-    public User toUser(String password) {
+    @Schema(example = "asdasdaa")
+    @NotNull
+    private String socialToken;
+
+    public User toUser() {
         return User.builder()
                 .email(this.email)
-                .password(password)
-                .socialType(UserSocialTypeEnum.PUP)
+                .socialToken(socialToken)
+                .socialType(UserSocialTypeEnum.GOOGLE)
                 .profile("")
                 .description("")
                 .openRange(OpenRangeEnum.PUBLIC)

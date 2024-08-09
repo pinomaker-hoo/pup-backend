@@ -3,6 +3,8 @@ package com.pup.api.user.service;
 import com.pup.api.friend.event.vo.FriendV1;
 import com.pup.api.friend.service.FriendService;
 import com.pup.api.user.domain.User;
+import com.pup.api.user.domain.UserSocialTypeEnum;
+import com.pup.api.user.event.dto.RequestSocialUserSaveDto;
 import com.pup.api.user.event.dto.RequestUserUpdateDto;
 import com.pup.api.user.event.vo.UserV0;
 import com.pup.api.user.event.vo.UserV0Response;
@@ -22,6 +24,8 @@ import com.pup.global.utils.EncryptionUtils;
 
 import java.util.List;
 
+import static com.pup.api.user.domain.UserSocialTypeEnum.PUP;
+
 @RequiredArgsConstructor
 @Slf4j
 @Service
@@ -29,9 +33,6 @@ public class UserService {
     private final UserJpaRepository userJpaRepository;
     private final PasswordEncoder passwordEncoder;
     private final FriendService friendService;
-    private final JwtTokenProvider jwtTokenProvider;
-    private final JwtTokenValidator jwtTokenValidator;
-    private final EncryptionUtils encryptionUtils;
 
 
     /**
@@ -40,6 +41,14 @@ public class UserService {
     public User saveUser(RequestUserSaveDto dto) {
         return userJpaRepository.save(dto.toUser(passwordEncoder.encode(dto.getPassword())));
     }
+
+    /**
+     * PUP 유저 생성
+     */
+    public User saveSocialUser(RequestSocialUserSaveDto dto) {
+        return userJpaRepository.save(dto.toUser());
+    }
+
 
     /**
      * 비밀번호 수정
@@ -80,7 +89,20 @@ public class UserService {
      * 로그인 유저 조회
      */
     public LoginUser findOne(String email) {
-        LoginUser user = userJpaRepository.findUserByEmail(email);
+        LoginUser user = userJpaRepository.findUserByEmail(email, PUP);
+
+        if (user == null) {
+            throw new NotFoundException("존재하지 않는 사용자 입니다.");
+        }
+
+        return user;
+    }
+
+    /**
+     * 로그인 유저 조회
+     */
+    public LoginUser findOne(String token, UserSocialTypeEnum socialType) {
+        LoginUser user = userJpaRepository.findUserByToken(token, socialType);
 
         if (user == null) {
             throw new NotFoundException("존재하지 않는 사용자 입니다.");

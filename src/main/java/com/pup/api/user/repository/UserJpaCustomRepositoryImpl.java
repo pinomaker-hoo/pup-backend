@@ -1,6 +1,7 @@
 package com.pup.api.user.repository;
 
 import com.pup.api.dog.domain.QDog;
+import com.pup.api.user.domain.UserSocialTypeEnum;
 import com.pup.api.user.event.vo.UserV0;
 import com.pup.api.user.event.vo.UserV1;
 import com.querydsl.core.Tuple;
@@ -34,7 +35,7 @@ public class UserJpaCustomRepositoryImpl implements UserJpaCustomRepository {
     }
 
     @Override
-    public LoginUser findUserByEmail(String email) {
+    public LoginUser findUserByEmail(String email, UserSocialTypeEnum socialType) {
         QUser u = QUser.user;
 
         return queryFactory.select(
@@ -45,7 +46,23 @@ public class UserJpaCustomRepositoryImpl implements UserJpaCustomRepository {
                                 u.password,
                                 u.userUid)
                 ).from(u)
-                .where(u.email.eq(email))
+                .where(u.email.eq(email).and(u.socialType.eq(socialType)))
+                .fetchOne();
+    }
+
+    @Override
+    public LoginUser findUserByToken(String token, UserSocialTypeEnum socialType) {
+        QUser u = QUser.user;
+
+        return queryFactory.select(
+                        Projections.constructor(
+                                LoginUser.class,
+                                u.userId,
+                                u.email,
+                                u.password,
+                                u.userUid)
+                ).from(u)
+                .where(u.socialToken.eq(token).and(u.socialType.eq(socialType)))
                 .fetchOne();
     }
 
