@@ -2,8 +2,10 @@ package com.pup.api.user.domain;
 
 import com.pup.api.dog.domain.Dog;
 import com.pup.api.friend.domain.Friend;
+import com.pup.api.user.event.vo.LoginResponse;
 import com.pup.api.walkingTrail.domain.WalkingTrail;
 import com.pup.api.walkingTrail.domain.WalkingTrailLike;
+import com.pup.global.dto.TokenDto;
 import com.pup.global.enums.OpenRangeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -90,5 +92,9 @@ public class User extends BaseTimeEntity {
 
     public void changePassword(String password) {
         this.password = password;
+    }
+
+    public LoginResponse toResponse(TokenDto token) {
+        return new LoginResponse(this.userId, this.email, this.userUid, token);
     }
 }
